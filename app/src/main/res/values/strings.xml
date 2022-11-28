@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">E-FlightApp</string>
+    <string name="sign_up_here"><u>Sign up here</u></string>
+    <string name="sign_in_here"><u>Sign in here</u></string>
 </resources>
