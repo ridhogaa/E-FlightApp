@@ -14,11 +14,9 @@ import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.auth.model.LoginBody
 import com.c10.finalproject.databinding.FragmentLoginBinding
-import com.c10.finalproject.ui.HomeActivity
-import com.c10.finalproject.ui.MainActivity
+import com.c10.finalproject.ui.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -59,7 +57,7 @@ class LoginFragment : Fragment() {
                                 response.message.toString(),
                                 Toast.LENGTH_SHORT
                             ).show()
-                            startActivity(Intent(requireContext(), HomeActivity::class.java))
+                            startActivity(Intent(requireContext(), UserActivity::class.java))
                             activity?.finish()
                         }
                         it.onFailure { responseFailure ->

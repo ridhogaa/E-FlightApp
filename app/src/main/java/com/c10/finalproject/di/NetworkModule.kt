@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val baseUrl = "http://192.168.0.145:3001" // Change ip address
+    private const val baseUrl = "https://final-project-be-production.up.railway.app/" // Change ip address
 
     @Singleton
     @Provides

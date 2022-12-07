@@ -165,9 +165,14 @@
                 android:id="@+id/et_departure_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:hint="Departure Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
+        w
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_return_date"
@@ -175,6 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
+            android:visibility="gone"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -189,77 +195,80 @@
                 android:id="@+id/et_return_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:hint="Return Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_passengers"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_return_date"
-            app:startIconContentDescription="passengers"
-            app:startIconDrawable="@drawable/ic_baseline_people_24">
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/til_passengers"-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--            android:layout_width="160dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="17dp"-->
+        <!--            app:boxCornerRadiusBottomEnd="15dp"-->
+        <!--            app:boxCornerRadiusBottomStart="15dp"-->
+        <!--            app:boxCornerRadiusTopEnd="15dp"-->
+        <!--            app:boxCornerRadiusTopStart="15dp"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/til_return_date"-->
+        <!--            app:startIconContentDescription="passengers"-->
+        <!--            app:startIconDrawable="@drawable/ic_baseline_people_24">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_passengers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Passengers"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:id="@+id/et_passengers"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:hint="Passengers"-->
+        <!--                android:inputType="number" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_class"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_return_date"
-            app:startIconContentDescription="class"
-            app:startIconDrawable="@drawable/ic_baseline_flight_class_24">
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/til_class"-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--            android:layout_width="160dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="17dp"-->
+        <!--            app:boxCornerRadiusBottomEnd="15dp"-->
+        <!--            app:boxCornerRadiusBottomStart="15dp"-->
+        <!--            app:boxCornerRadiusTopEnd="15dp"-->
+        <!--            app:boxCornerRadiusTopStart="15dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/til_return_date"-->
+        <!--            app:startIconContentDescription="class"-->
+        <!--            app:startIconDrawable="@drawable/ic_baseline_flight_class_24">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_class"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Seat Class"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:id="@+id/et_class"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:hint="Seat Class"-->
+        <!--                android:inputType="text" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_search"
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:backgroundTint="@color/blue"
             android:text="Search"
             android:textSize="25dp"
-            app:cornerRadius="10dp"
+            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_class" />
+            app:layout_constraintTop_toBottomOf="@id/til_return_date" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/swap_from_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Switch"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/white"
+            android:contentDescription="Switch"
             app:layout_constraintBottom_toTopOf="@+id/til_to"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_from"
