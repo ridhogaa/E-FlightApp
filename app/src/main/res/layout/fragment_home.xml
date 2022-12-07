@@ -172,7 +172,6 @@
                 android:hint="Departure Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
-        w
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_return_date"
