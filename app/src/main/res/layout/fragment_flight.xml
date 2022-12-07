@@ -182,7 +182,7 @@
         android:layout_marginEnd="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="et_return_date_flight"
+            android:id="@+id/et_return_date_flight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Return Date"
