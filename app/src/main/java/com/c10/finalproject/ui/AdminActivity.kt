@@ -1,4 +1,4 @@
-package com.c10.finalproject.ui.admin
+package com.c10.finalproject.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
