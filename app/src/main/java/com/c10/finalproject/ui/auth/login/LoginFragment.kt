@@ -1,15 +1,23 @@
 package com.c10.finalproject.ui.auth.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
+import com.c10.finalproject.data.remote.auth.model.LoginBody
 import com.c10.finalproject.databinding.FragmentLoginBinding
+import com.c10.finalproject.ui.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -17,6 +25,7 @@ class LoginFragment : Fragment() {
     private val viewModel: LoginViewModel by activityViewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private var job: Job = Job()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +43,38 @@ class LoginFragment : Fragment() {
 
     private fun login() {
         // TODO : add logic login wait for api
+        binding.btnSignin.setOnClickListener {
+            val email = binding.etEmail.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
+            lifecycleScope.launchWhenResumed {
+                if (job.isActive) job.cancel()
+                job = launch {
+                    viewModel.login(LoginBody(email, password)).collect() {
+                        it.onSuccess { response ->
+//                            viewModel.setToken(response.accessToken.toString())
+                            Toast.makeText(
+                                requireContext(),
+                                response.message.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            startActivity(Intent(requireContext(), UserActivity::class.java))
+                            activity?.finish()
+                        }
+                        it.onFailure { responseFailure ->
+                            Toast.makeText(
+                                requireContext(),
+                                responseFailure.message.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            binding.apply {
+                                etEmail.text?.clear()
+                                etPassword.text?.clear()
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun dontHaveAccount() {

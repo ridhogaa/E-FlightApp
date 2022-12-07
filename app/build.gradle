@@ -59,6 +59,9 @@ android {
         baseline file("lint-baseline.xml")
         abortOnError false
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {

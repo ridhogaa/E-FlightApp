@@ -8,7 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#4600FF</color>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8a728d010c1483d99fdcd2c38bd222cfed0c54b5
     <color name="main_blue">#0066FF</color>
     <color name="secondary_color_text">#555555</color>
 </resources>

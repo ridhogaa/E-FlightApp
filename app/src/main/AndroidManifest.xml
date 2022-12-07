@@ -18,7 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EFlightApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".ui.UserActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.admin.AdminActivity"
             android:exported="true">
@@ -36,5 +41,4 @@
             android:exported="true">
         </activity>
     </application>
-
 </manifest>
