@@ -27,9 +27,9 @@ class AdminActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottom_nav_view)
 
         val appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.homeFragment,
-            R.id.transactionFragment,
-            R.id.flightFragment
+            R.id.homeFragmentAdmin,
+            R.id.transactionFragmentAdmin,
+            R.id.flightFragmentAdmin
         ).build()
 
         setupActionBarWithNavController(navController, appBarConfiguration)

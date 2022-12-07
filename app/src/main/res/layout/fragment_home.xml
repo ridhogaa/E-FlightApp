@@ -1,72 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-=======
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> 8a728d010c1483d99fdcd2c38bd222cfed0c54b5
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-    tools:context=".ui.admin.home.HomeFragment">
-
-
-    <TextView
-        android:id="@+id/tv_hi_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/inter_medium"
-        android:textColor="@color/main_blue"
-        android:textSize="16sp"
-        android:text="Hi, Admin!"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        style="@style/TextView16BlackSemiBold"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Here's Your Product!"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hi_admin" />
-
-    <TextView
-        android:id="@+id/textView4"
-        style="@style/TextView16BlackMedium"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:text="Balance"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView5"
-        style="@style/TextView16BlackMedium"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Rp. 3000.000.00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list_flight"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView5"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_fligt_home" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-=======
     tools:context=".ui.user.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -235,7 +172,6 @@
                 android:hint="Departure Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
-        w
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_return_date"
@@ -341,4 +277,3 @@
 
 
 </ScrollView>
->>>>>>> 8a728d010c1483d99fdcd2c38bd222cfed0c54b5
