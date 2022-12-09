@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:padding="8dp"
-    tools:context=".ui.admin.transaction.DetailTransactionFragment"
+    tools:context=".ui.admin.detailtransaction.DetailTransactionFragment"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout

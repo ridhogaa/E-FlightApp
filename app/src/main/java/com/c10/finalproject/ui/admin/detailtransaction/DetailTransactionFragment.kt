@@ -1,4 +1,4 @@
-package com.c10.finalproject.ui.admin.transaction
+package com.c10.finalproject.ui.admin.detailtransaction
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
