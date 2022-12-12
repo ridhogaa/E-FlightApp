@@ -51,7 +51,7 @@ class LoginFragment : Fragment() {
                 job = launch {
                     viewModel.login(LoginBody(email, password)).collect() {
                         it.onSuccess { response ->
-                            //  viewModel.setToken(response.accessToken.toString())
+                            viewModel.setToken(response.accessToken.toString())
                             if (response.role.equals("admin", ignoreCase = true)) {
                                 Toast.makeText(
                                     requireContext(),

@@ -3,16 +3,23 @@ package com.c10.finalproject.ui.user.home
 import android.app.DatePickerDialog
 import android.content.res.ColorStateList
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.c10.finalproject.R
 import com.c10.finalproject.databinding.FragmentHomeBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -29,13 +36,35 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         departureDate()
         returnDate()
         chooseDeparture()
+        observe()
     }
 
+    private fun observe() {
+        viewModel.getToken().observe(viewLifecycleOwner) { token ->
+            lifecycleScope.launch {
+                lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    viewModel.getUserByToken(token).collectLatest {
+                        it.onSuccess { response ->
+                            binding.apply {
+                                tvHello.text = "Hello, ${response.data?.name}"
+                            }
+                        }
+                        it.onFailure { responseFailure ->
+                            throw responseFailure
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun departureDate() {
         binding.apply {
             etDepartureDate.setOnClickListener {
@@ -59,6 +88,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun returnDate() {
         binding.apply {
             etReturnDate.setOnClickListener {

@@ -1,32 +1,44 @@
 package com.c10.finalproject.ui.user.profile
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.c10.finalproject.R
+import androidx.fragment.app.activityViewModels
+import com.c10.finalproject.databinding.FragmentProfileBinding
+import com.c10.finalproject.ui.MainActivity
 
 class ProfileFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
-
-    private lateinit var viewModel: ProfileViewModel
+    private val viewModel: ProfileViewModel by activityViewModels()
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        logout()
     }
 
+    private fun logout() {
+        binding.btnLogout.setOnClickListener {
+            viewModel.clearToken()
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            activity?.finish()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
