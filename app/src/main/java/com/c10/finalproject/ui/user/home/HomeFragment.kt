@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun departureDate() {
+    private fun departureDate() {//
         binding.apply {
             etDepartureDate.setOnClickListener {
                 val c = Calendar.getInstance()
