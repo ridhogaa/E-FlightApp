@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.c10.finalproject"
-        minSdk 30
+        minSdk 22
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -58,6 +58,9 @@ android {
     lintOptions {
         baseline file("lint-baseline.xml")
         abortOnError false
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 

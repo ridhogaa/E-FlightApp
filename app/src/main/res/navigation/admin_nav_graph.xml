@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_nav_graph"
+    app:startDestination="@id/homeFragmentAdmin">
+
+    <fragment
+        android:id="@+id/homeFragmentAdmin"
+        android:name="com.c10.finalproject.ui.admin.home.HomeFragment"
+        tools:layout="@layout/fragment_home_admin"
+        android:label="Home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_transactionFragment"
+            app:destination="@id/transactionFragmentAdmin" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_flightFragment"
+            app:destination="@id/flightFragmentAdmin" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionFragmentAdmin"
+        android:name="com.c10.finalproject.ui.admin.transaction.TransactionFragment"
+        tools:layout="@layout/fragment_transaction"
+        android:label="Transaction">
+
+        <action
+            android:id="@+id/action_transactionFragment_to_DetailFragment"
+            app:destination="@id/detailFragmentAdmin" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragmentAdmin"
+        android:name="com.c10.finalproject.ui.admin.transaction.DetailTransactionFragment"
+        tools:layout="@layout/fragment_detail_transaction"
+        android:label="Detail Transaction">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/flightFragmentAdmin"
+        android:name="com.c10.finalproject.ui.admin.flight.FlightFragment"
+        tools:layout="@layout/fragment_flight"
+        android:label="Flight">
+
+    </fragment>
+
+</navigation>
