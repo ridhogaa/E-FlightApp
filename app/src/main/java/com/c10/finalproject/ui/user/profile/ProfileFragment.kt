@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.c10.finalproject.databinding.FragmentProfileBinding
 import com.c10.finalproject.ui.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private val viewModel: ProfileViewModel by activityViewModels()

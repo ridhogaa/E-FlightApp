@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.bumptech.glide.Glide
 import com.c10.finalproject.R
 import com.c10.finalproject.databinding.FragmentHomeBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -46,21 +51,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.getToken().observe(viewLifecycleOwner) { token ->
-            lifecycleScope.launch {
-                lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    viewModel.getUserByToken(token).collectLatest {
-                        it.onSuccess { response ->
-                            binding.apply {
-                                tvHello.text = "Hello, ${response.data?.name}"
-                            }
-                        }
-                        it.onFailure { responseFailure ->
-                            throw responseFailure
-                        }
-                    }
+        viewModel.user.observe(viewLifecycleOwner) {
+            it.onSuccess { response ->
+                binding.apply {
+                    tvHello.text = "Hello, ${response.data?.name}"
+                    isImageEmpty(response.data?.photoProfile.toString())
                 }
             }
+            it.onFailure {
+
+            }
+        }
+    }
+
+    private fun isImageEmpty(urlImage: String) {
+        if (urlImage.isNotEmpty()) {
+            Glide.with(requireContext()).load(urlImage).into(binding.imageProfile)
+        } else {
+            binding.imageProfile.background =
+                resources.getDrawable(R.drawable.ic_baseline_account_circle_24)
         }
     }
 

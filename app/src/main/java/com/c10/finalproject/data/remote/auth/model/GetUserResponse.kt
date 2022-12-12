@@ -30,7 +30,7 @@ data class Data(
     @SerializedName("address")
     val address: Any?,
     @SerializedName("photoProfile")
-    val photoProfile: Any?,
+    val photoProfile: String?,
     @SerializedName("email")
     val email: String?,
     @SerializedName("encryptedPassword")

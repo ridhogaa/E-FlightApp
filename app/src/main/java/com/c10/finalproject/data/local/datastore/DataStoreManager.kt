@@ -29,7 +29,7 @@ class DataStoreManager(@ApplicationContext private val context: Context) {
 
     suspend fun clearToken() {
         context.dataStore.edit {
-            it.remove(TOKEN_USER_KEY)
+            it.clear()
         }
     }
 
