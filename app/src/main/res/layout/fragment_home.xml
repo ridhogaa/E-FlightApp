@@ -286,6 +286,19 @@
             app:layout_constraintTop_toBottomOf="@+id/til_from"
             app:srcCompat="@drawable/ic_baseline_swap_vert_24" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/swap_to_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Switch"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/til_to"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_from"
+            app:srcCompat="@drawable/ic_baseline_swap_vert_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

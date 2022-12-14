@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by activityViewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var chooseCategory: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +45,32 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        chooseCategory = "One-Way"
+        swapOnClick()
         departureDate()
         returnDate()
         chooseDeparture()
         observe()
+    }
+
+    private fun swapOnClick() {
+        binding.swapFromTo.setOnClickListener {
+            val from = binding.etFrom.text.toString().trim()
+            val to = binding.etTo.text.toString().trim()
+            binding.etTo.setText(from)
+            binding.etFrom.setText(to)
+            binding.swapToFrom.visibility = View.VISIBLE
+            binding.swapFromTo.visibility = View.GONE
+
+        }
+        binding.swapToFrom.setOnClickListener {
+            val from = binding.etFrom.text.toString().trim()
+            val to = binding.etTo.text.toString().trim()
+            binding.etTo.setText(to)
+            binding.etFrom.setText(from)
+            binding.swapFromTo.visibility = View.VISIBLE
+            binding.swapToFrom.visibility = View.GONE
+        }
     }
 
     private fun observe() {
@@ -123,6 +146,7 @@ class HomeFragment : Fragment() {
 
     private fun chooseDeparture() {
         binding.btnOneWay.setOnClickListener {
+            chooseCategory = "One-Way"
             binding.tilReturnDate.visibility = View.GONE
             binding.btnOneWay.setTextColor(resources.getColor(R.color.white))
             binding.btnOneWay.backgroundTintList =
@@ -136,6 +160,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnRoundTrip.setOnClickListener {
+            chooseCategory = "Round-Trip"
             binding.tilReturnDate.visibility = View.VISIBLE
             binding.btnRoundTrip.setTextColor(resources.getColor(R.color.white))
             binding.btnRoundTrip.backgroundTintList =
