@@ -43,7 +43,6 @@ class SearchResultViewModel @Inject constructor(private val ticketRepository: Ti
                 } else {
                     _searchResult.postValue(Resource.Empty())
                 }
-
             }
             if (ticketList.size > 0) {
                 viewModelScope.launch(Dispatchers.Main) {
