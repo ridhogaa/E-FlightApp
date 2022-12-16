@@ -32,9 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:fontFamily="@font/inter_medium"
-            android:text="IN-230"
+            android:text="Garuda Indonesia"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,9 +92,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/inter_medium"
-            android:text="JKT (Jakarta)"
+            android:text="Jakarta"
             android:textColor="@color/secondary_color_text"
-            android:textSize="10sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -104,9 +104,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/inter_medium"
-            android:text="JPN (Japan)"
+            android:text="Japan"
             android:textColor="@color/secondary_color_text"
-            android:textSize="10sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/inter_medium"
-            android:text="ECONOMY CLASS"
+            android:text="One Way"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"

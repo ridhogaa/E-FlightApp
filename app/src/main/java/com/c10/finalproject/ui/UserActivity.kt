@@ -40,6 +40,12 @@ class UserActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.searchResultFragment -> hideBottomNav(true)
+                else -> hideBottomNav(false)
+            }
+        }
     }
 
     private fun hideBottomNav(hide: Boolean) {

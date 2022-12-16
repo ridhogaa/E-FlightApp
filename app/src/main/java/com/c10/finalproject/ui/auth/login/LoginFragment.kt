@@ -59,7 +59,7 @@ class LoginFragment : Fragment() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 startActivity(Intent(requireContext(), AdminActivity::class.java))
-                                activity?.finish()
+                                //activity?.finish()
                             } else {
                                 Toast.makeText(
                                     requireContext(),
@@ -67,7 +67,7 @@ class LoginFragment : Fragment() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 startActivity(Intent(requireContext(), UserActivity::class.java))
-                                activity?.finish()
+                                //activity?.finish()
                             }
                         }
                         it.onFailure { responseFailure ->

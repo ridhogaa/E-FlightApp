@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.c10.finalproject.R
 import com.c10.finalproject.databinding.FragmentHomeBinding
@@ -45,12 +47,13 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        chooseCategory = "One-Way"
+        chooseCategory = "one_way"
         swapOnClick()
         departureDate()
         returnDate()
         chooseDeparture()
         observe()
+        buttonSearchOnClick()
     }
 
     private fun swapOnClick() {
@@ -96,6 +99,44 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun buttonSearchOnClick() {
+        binding.btnSearch.setOnClickListener {
+            val from = binding.etFrom.text.toString().trim()
+            val to = binding.etTo.text.toString().trim()
+            val departureDate = binding.etDepartureDate.text.toString().trim()
+            val returnDate = binding.etReturnDate.text.toString().trim()
+            val bundle = Bundle()
+            if (chooseCategory.equals(
+                    "one_way",
+                    true
+                ) && from.isNotEmpty() && to.isNotEmpty() && departureDate.isNotEmpty()
+            ) {
+                bundle.putString("CATEGORY", chooseCategory)
+                bundle.putString("FROM", from)
+                bundle.putString("TO", to)
+                bundle.putString("DEPARTURE", departureDate)
+                bundle.putString("RETURN", null)
+                it.findNavController()
+                    .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
+            } else if (chooseCategory.equals(
+                    "round_trip",
+                    true
+                ) && from.isNotEmpty() && to.isNotEmpty() && departureDate.isNotEmpty() && returnDate.isNotEmpty()
+            ) {
+                bundle.putString("CATEGORY", chooseCategory)
+                bundle.putString("FROM", from)
+                bundle.putString("TO", to)
+                bundle.putString("DEPARTURE", departureDate)
+                bundle.putString("RETURN", returnDate)
+                it.findNavController()
+                    .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
+
+            } else {
+                Toast.makeText(requireContext(), "Field must not empty", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     private fun departureDate() {
         binding.apply {
@@ -108,7 +149,7 @@ class HomeFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        val date = (dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
                         etDepartureDate.setText(date)
                     },
                     year,
@@ -132,7 +173,7 @@ class HomeFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        val date = (dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
                         etReturnDate.setText(date)
                     },
                     year,
@@ -146,7 +187,7 @@ class HomeFragment : Fragment() {
 
     private fun chooseDeparture() {
         binding.btnOneWay.setOnClickListener {
-            chooseCategory = "One-Way"
+            chooseCategory = "one_way"
             binding.tilReturnDate.visibility = View.GONE
             binding.btnOneWay.setTextColor(resources.getColor(R.color.white))
             binding.btnOneWay.backgroundTintList =
@@ -160,7 +201,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnRoundTrip.setOnClickListener {
-            chooseCategory = "Round-Trip"
+            chooseCategory = "round_trip"
             binding.tilReturnDate.visibility = View.VISIBLE
             binding.btnRoundTrip.setTextColor(resources.getColor(R.color.white))
             binding.btnRoundTrip.backgroundTintList =
