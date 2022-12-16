@@ -19,19 +19,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import coil.load
-import coil.transform.RoundedCornersTransformation
 import com.c10.finalproject.R
 import com.c10.finalproject.databinding.FragmentProfileBinding
+import com.c10.finalproject.ui.MainActivity
+import com.c10.finalproject.ui.UserActivity
 import com.c10.finalproject.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
 
 
 const val REQUEST_CODE_PERMISSION = 201
+
 @Suppress("DEPRECATION")
 
 @AndroidEntryPoint
@@ -39,7 +41,7 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val profileViewModel: ProfileViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,25 +59,14 @@ class ProfileFragment : Fragment() {
         binding.btnUpdate.setOnClickListener { toUpdateAccount() }
         binding.btnLogout.setOnClickListener { toLogout() }
 
-        profileViewModel.getImage().observe(viewLifecycleOwner) {
-            if (it.isNullOrEmpty().not()) {
-                setProfilePicture(Utils.convertStringToBitmap(it))
-            } else {
-                binding.imageUser.setImageResource(R.drawable.ic_photo_profile)
-            }
-        }
     }
 
     private fun setProfilePicture(bitmap: Bitmap) {
-        binding.imageUser.load(bitmap) {
-            crossfade(true)
-            placeholder(R.drawable.ic_photo_profile)
-            transformations(RoundedCornersTransformation())
-        }
+
     }
 
     private fun checkingPermission() {
-        if(isGranted(
+        if (isGranted(
                 requireActivity(), Manifest.permission.CAMERA,
                 arrayOf(
                     Manifest.permission.CAMERA,
@@ -84,7 +75,7 @@ class ProfileFragment : Fragment() {
                     Manifest.permission.MANAGE_EXTERNAL_STORAGE
                 ), REQUEST_CODE_PERMISSION
             )
-        ){
+        ) {
             chooseImageDialog()
         }
     }
@@ -92,7 +83,7 @@ class ProfileFragment : Fragment() {
     private fun chooseImageDialog() {
         AlertDialog.Builder(requireContext())
             .setMessage("Choose Picture")
-            .setPositiveButton("Gallery") { _, _ -> openGallery()}
+            .setPositiveButton("Gallery") { _, _ -> openGallery() }
             .show()
     }
 
@@ -122,16 +113,7 @@ class ProfileFragment : Fragment() {
 
     private val galleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
-            binding.imageUser.load(result) {
-                crossfade(true)
-                placeholder(R.drawable.ic_photo_profile)
-                target { result ->
-                    val bitmap = (result as BitmapDrawable).bitmap
-                    profileViewModel.uploadImage(Utils.convertBitmapToString(bitmap))
-                    profileViewModel.applyBlur(getImageUri(bitmap))
-                }
-                transformations(RoundedCornersTransformation())
-            }
+
         }
 
     private fun getImageUri(bitmap: Bitmap): Uri {
@@ -170,19 +152,11 @@ class ProfileFragment : Fragment() {
         val birthday = binding.etBirthday.text.toString()
         val address = binding.etAddress.text.toString()
 
-        profileViewModel.editAccount(cardNumber,username,email,name,contact,birthday,address)
-        Toast.makeText(requireContext(), "Update Success", Toast.LENGTH_SHORT).show()
-        findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
     }
 
     private fun toLogout() {
-        val option = NavOptions.Builder()
-            .setPopUpTo(R.id.profileFragment, true)
-            .build()
-
-        profileViewModel.statusLogin(false)
-        findNavController().navigate(R.id.action_profileFragment_to_loginFragment, null, option)
-
+        profileViewModel.clearToken()
+        startActivity(Intent(requireContext(), MainActivity::class.java))
     }
 
     override fun onDestroy() {
