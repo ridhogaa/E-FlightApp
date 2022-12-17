@@ -2,6 +2,8 @@ package com.c10.finalproject.data.repository
 
 import com.c10.finalproject.data.remote.tickets.datasource.TicketRemoteDataSource
 import com.c10.finalproject.data.remote.tickets.model.Data
+import com.c10.finalproject.data.remote.tickets.model.DataTicket
+import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
 import com.c10.finalproject.wrapper.Resource
 import javax.inject.Inject
 
@@ -11,14 +13,15 @@ import javax.inject.Inject
  */
 
 interface TicketRepository {
-    suspend fun getTicket(): Resource<List<Data>>
+    suspend fun getTickets(): Resource<List<Data>>
+    suspend fun getTicketById(id: Int): Resource<GetTicketByIdResponse>
 }
 
 class TicketRepositoryImpl @Inject constructor(private val dataSource: TicketRemoteDataSource) :
     TicketRepository {
-    override suspend fun getTicket(): Resource<List<Data>> {
+    override suspend fun getTickets(): Resource<List<Data>> {
         return proceed {
-            dataSource.getTicket().data?.map {
+            dataSource.getTickets().data?.map {
                 Data(
                     id = it?.id,
                     airplaneName = it?.airplaneName,
@@ -37,6 +40,12 @@ class TicketRepositoryImpl @Inject constructor(private val dataSource: TicketRem
                     updatedAt = it?.updatedAt,
                 )
             }!!
+        }
+    }
+
+    override suspend fun getTicketById(id: Int): Resource<GetTicketByIdResponse> {
+        return proceed {
+            dataSource.getTicketById(id)
         }
     }
 

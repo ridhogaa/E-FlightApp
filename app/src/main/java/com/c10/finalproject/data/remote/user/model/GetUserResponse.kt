@@ -1,5 +1,4 @@
-package com.c10.finalproject.data.remote.auth.model
-
+package com.c10.finalproject.data.remote.user.model
 
 import com.google.gson.annotations.SerializedName
 

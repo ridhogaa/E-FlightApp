@@ -54,5 +54,9 @@
         android:id="@+id/searchResultFragment"
         android:name="com.c10.finalproject.ui.user.search.SearchResultFragment"
         android:label="fragment_search_result"
-        tools:layout="@layout/fragment_search_result" />
+        tools:layout="@layout/fragment_search_result" >
+        <action
+            android:id="@+id/action_searchResultFragment_to_flightDetailsFragment"
+            app:destination="@id/flightDetailsFragment" />
+    </fragment>
 </navigation>

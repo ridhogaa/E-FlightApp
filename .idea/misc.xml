@@ -28,7 +28,7 @@
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_detail_transaction.xml" value="0.25" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_first.xml" value="0.25" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_flight.xml" value="0.25" />
-        <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_flight_details.xml" value="0.264" />
+        <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_flight_details.xml" value="0.176" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_history.xml" value="0.25" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/fragment_home_admin.xml" value="0.25" />
@@ -48,6 +48,7 @@
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/item_list_search.xml" value="0.25" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/item_list_transaction.xml" value="0.25" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/item_list_wishlist.xml" value="0.1" />
+        <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/layout/list_textview.xml" value="0.25" />
         <entry key="..\:/Kampus Merdeka Binar Academy smt 5/Final-Project-C10/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
       </map>
     </option>

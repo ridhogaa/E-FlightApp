@@ -1,8 +1,8 @@
 package com.c10.finalproject.data.repository
 
-import com.c10.finalproject.data.remote.auth.ApiServiceAuth
-import com.c10.finalproject.data.remote.auth.model.GetUserResponse
 import com.c10.finalproject.data.remote.auth.model.ResponseError
+import com.c10.finalproject.data.remote.user.ApiServiceUser
+import com.c10.finalproject.data.remote.user.model.GetUserResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,14 +18,14 @@ interface UserRespository {
 }
 
 class UserRepositoryImpl @Inject constructor(
-    private val apiServiceAuth: ApiServiceAuth
+    private val apiServiceUser: ApiServiceUser
 ) : UserRespository {
 
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun getUserByToken(token: String): Flow<Result<GetUserResponse>> =
         flow {
             try {
-                val response = apiServiceAuth.getUserByToken("Bearer $token")
+                val response = apiServiceUser.getUserByToken("Bearer $token")
                 if (response.isSuccessful) {
                     response.body()?.let {
                         emit(Result.success(it))

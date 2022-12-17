@@ -33,12 +33,9 @@ class DataStoreManager(@ApplicationContext private val context: Context) {
         }
     }
 
-
     companion object {
         private const val DATASTORE_NAME = "datastore_preferences"
         private val TOKEN_USER_KEY = stringPreferencesKey("token_user_key")
-
-
         private val Context.dataStore by preferencesDataStore(
             name = DATASTORE_NAME
         )

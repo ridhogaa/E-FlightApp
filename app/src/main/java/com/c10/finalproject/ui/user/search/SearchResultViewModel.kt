@@ -26,28 +26,27 @@ class SearchResultViewModel @Inject constructor(private val ticketRepository: Ti
         category: String,
         departureDate: String,
         returnDate: String?
-    ) =
-        viewModelScope.launch(Dispatchers.IO) {
-            _searchResult.postValue(Resource.Loading())
-            val ticket = ticketRepository.getTicket()
-            val ticketList = mutableListOf<Data>()
-            ticket.payload?.forEach {
-                if (it.origin.equals(origin)
-                    && it.destination.equals(destination)
-                    && it.category.equals(category)
-                    && it.departureTime?.substring(0, 10).equals(departureDate)
-                    && it.returnTime?.substring(0, 10).equals(returnDate)
-                ) {
-                    ticketList.clear()
-                    ticketList.add(it)
-                } else {
-                    _searchResult.postValue(Resource.Empty())
-                }
-            }
-            if (ticketList.size > 0) {
-                viewModelScope.launch(Dispatchers.Main) {
-                    _searchResult.postValue(Resource.Success(ticketList))
-                }
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        _searchResult.postValue(Resource.Loading())
+        val ticket = ticketRepository.getTickets()
+        val ticketList = mutableListOf<Data>()
+        ticket.payload?.forEach {
+            if (it.origin.equals(origin)
+                && it.destination.equals(destination)
+                && it.category.equals(category)
+                && it.departureTime?.substring(0, 10).equals(departureDate)
+                && it.returnTime?.substring(0, 10).equals(returnDate)
+            ) {
+                ticketList.clear()
+                ticketList.add(it)
+            } else {
+                _searchResult.postValue(Resource.Empty())
             }
         }
+        if (ticketList.size > 0) {
+            viewModelScope.launch(Dispatchers.Main) {
+                _searchResult.postValue(Resource.Success(ticketList))
+            }
+        }
+    }
 }

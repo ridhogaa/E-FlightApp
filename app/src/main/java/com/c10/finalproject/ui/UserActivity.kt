@@ -43,6 +43,7 @@ class UserActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.searchResultFragment -> hideBottomNav(true)
+                R.id.flightDetailsFragment -> hideBottomNav(true)
                 else -> hideBottomNav(false)
             }
         }

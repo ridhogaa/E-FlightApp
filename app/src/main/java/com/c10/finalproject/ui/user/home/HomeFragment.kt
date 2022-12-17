@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
@@ -19,7 +21,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.c10.finalproject.R
+import com.c10.finalproject.data.remote.tickets.model.Data
 import com.c10.finalproject.databinding.FragmentHomeBinding
+import com.c10.finalproject.ui.user.search.SearchAdapter
+import com.c10.finalproject.wrapper.Resource
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -47,6 +52,7 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeTicket()
         chooseCategory = "one_way"
         swapOnClick()
         departureDate()
@@ -55,6 +61,25 @@ class HomeFragment : Fragment() {
         observe()
         buttonSearchOnClick()
     }
+
+    private fun observeTicket() {
+        viewModel.ticket.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                }
+                is Resource.Error -> {
+                }
+                is Resource.Success -> {
+                    val adapter = ArrayAdapter(requireContext(), R.layout.list_textview, it.data)
+                    (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)
+                    (binding.etTo as? AutoCompleteTextView)?.setAdapter(adapter)
+                }
+                else -> {
+                }
+            }
+        }
+    }
+
 
     private fun swapOnClick() {
         binding.swapFromTo.setOnClickListener {
@@ -106,31 +131,38 @@ class HomeFragment : Fragment() {
             val departureDate = binding.etDepartureDate.text.toString().trim()
             val returnDate = binding.etReturnDate.text.toString().trim()
             val bundle = Bundle()
-            if (chooseCategory.equals(
-                    "one_way",
-                    true
-                ) && from.isNotEmpty() && to.isNotEmpty() && departureDate.isNotEmpty()
-            ) {
-                bundle.putString("CATEGORY", chooseCategory)
-                bundle.putString("FROM", from)
-                bundle.putString("TO", to)
-                bundle.putString("DEPARTURE", departureDate)
-                bundle.putString("RETURN", null)
-                it.findNavController()
-                    .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
-            } else if (chooseCategory.equals(
-                    "round_trip",
-                    true
-                ) && from.isNotEmpty() && to.isNotEmpty() && departureDate.isNotEmpty() && returnDate.isNotEmpty()
-            ) {
-                bundle.putString("CATEGORY", chooseCategory)
-                bundle.putString("FROM", from)
-                bundle.putString("TO", to)
-                bundle.putString("DEPARTURE", departureDate)
-                bundle.putString("RETURN", returnDate)
-                it.findNavController()
-                    .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
-
+            if (from.isNotEmpty() && to.isNotEmpty() && departureDate.isNotEmpty()) {
+                if (from != to) {
+                    if (chooseCategory.equals("one_way", true)) {
+                        bundle.putString("CATEGORY", chooseCategory)
+                        bundle.putString("FROM", from)
+                        bundle.putString("TO", to)
+                        bundle.putString("DEPARTURE", departureDate)
+                        bundle.putString("RETURN", null)
+                        it.findNavController()
+                            .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
+                    } else if (chooseCategory.equals("round_trip", true) && returnDate.isNotEmpty()) {
+                        if (departureDate != returnDate){
+                            bundle.putString("CATEGORY", chooseCategory)
+                            bundle.putString("FROM", from)
+                            bundle.putString("TO", to)
+                            bundle.putString("DEPARTURE", departureDate)
+                            bundle.putString("RETURN", returnDate)
+                            it.findNavController()
+                                .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
+                        } else {
+                            Toast.makeText(requireContext(), "Departure Date and Return Date must not match", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Field must not empty", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "From and to must not match",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             } else {
                 Toast.makeText(requireContext(), "Field must not empty", Toast.LENGTH_SHORT).show()
             }

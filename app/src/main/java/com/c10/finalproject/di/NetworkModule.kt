@@ -2,6 +2,7 @@ package com.c10.finalproject.di
 
 import com.c10.finalproject.data.remote.auth.ApiServiceAuth
 import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
+import com.c10.finalproject.data.remote.user.ApiServiceUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,6 +46,12 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideApiServiceUser(retrofit: Retrofit): ApiServiceUser =
+        retrofit.create(ApiServiceUser::class.java)
+
+    @Singleton
+    @Provides
     fun provideApiServiceTicket(retrofit: Retrofit): ApiServiceTicket =
         retrofit.create(ApiServiceTicket::class.java)
+
 }

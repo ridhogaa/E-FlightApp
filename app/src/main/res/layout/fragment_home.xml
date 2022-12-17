@@ -112,10 +112,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_from"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
+            android:hint="From"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -126,20 +127,23 @@
             app:startIconContentDescription="from"
             app:startIconDrawable="@drawable/ic_baseline_flight_takeoff_24">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/et_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="From"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:focusable="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_to"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
+            android:hint="To"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -150,11 +154,13 @@
             app:startIconContentDescription="to"
             app:startIconDrawable="@drawable/ic_baseline_flight_land_24">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/et_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="To"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:focusable="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -181,7 +187,6 @@
                 android:cursorVisible="false"
                 android:editable="false"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="Departure Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -210,7 +215,6 @@
                 android:cursorVisible="false"
                 android:editable="false"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="Return Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
