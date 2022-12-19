@@ -11,5 +11,7 @@ data class LoginResponse(
     @SerializedName("user")
     val user: String?,
     @SerializedName("accessToken")
-    val accessToken: String?
+    val accessToken: String?,
+    @SerializedName("role")
+    val role: String?
 )

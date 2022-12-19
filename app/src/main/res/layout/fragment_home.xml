@@ -65,6 +65,19 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_search_flight"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_list_home" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_one_way"
             style="@style/Widget.Material3.Button.OutlinedButton"
@@ -78,7 +91,7 @@
             android:textSize="20dp"
             app:cornerRadius="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_search_flight"
+            app:layout_constraintTop_toBottomOf="@id/rv_home"
             app:strokeColor="@color/blue" />
 
         <com.google.android.material.button.MaterialButton
@@ -94,15 +107,16 @@
             android:textSize="20dp"
             app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_search_flight"
+            app:layout_constraintTop_toBottomOf="@id/rv_home"
             app:strokeColor="@color/black" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_from"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
+            android:hint="From"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -113,20 +127,23 @@
             app:startIconContentDescription="from"
             app:startIconDrawable="@drawable/ic_baseline_flight_takeoff_24">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/et_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="From"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:focusable="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_to"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
+            android:hint="To"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -137,11 +154,13 @@
             app:startIconContentDescription="to"
             app:startIconDrawable="@drawable/ic_baseline_flight_land_24">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/et_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="To"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:focusable="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,7 +187,6 @@
                 android:cursorVisible="false"
                 android:editable="false"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="Departure Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -197,7 +215,6 @@
                 android:cursorVisible="false"
                 android:editable="false"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="Return Date"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -254,6 +271,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
+            android:layout_marginBottom="15dp"
             android:text="Search"
             android:textSize="25dp"
             app:cornerRadius="8dp"
@@ -268,6 +286,19 @@
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Switch"
+            app:layout_constraintBottom_toTopOf="@+id/til_to"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_from"
+            app:srcCompat="@drawable/ic_baseline_swap_vert_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/swap_to_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Switch"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/til_to"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_from"

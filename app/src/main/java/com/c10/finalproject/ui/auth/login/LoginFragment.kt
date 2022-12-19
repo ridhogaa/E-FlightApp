@@ -10,11 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.auth.model.LoginBody
 import com.c10.finalproject.databinding.FragmentLoginBinding
 import com.c10.finalproject.ui.UserActivity
+import com.c10.finalproject.ui.AdminActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -51,14 +51,24 @@ class LoginFragment : Fragment() {
                 job = launch {
                     viewModel.login(LoginBody(email, password)).collect() {
                         it.onSuccess { response ->
-//                            viewModel.setToken(response.accessToken.toString())
-                            Toast.makeText(
-                                requireContext(),
-                                response.message.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            startActivity(Intent(requireContext(), UserActivity::class.java))
-                            activity?.finish()
+                            viewModel.setToken(response.accessToken.toString())
+                            if (response.role.equals("admin", ignoreCase = true)) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    response.message.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(Intent(requireContext(), AdminActivity::class.java))
+                                //activity?.finish()
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    response.message.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(Intent(requireContext(), UserActivity::class.java))
+                                //activity?.finish()
+                            }
                         }
                         it.onFailure { responseFailure ->
                             Toast.makeText(

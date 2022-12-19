@@ -49,7 +49,7 @@ class RegisterFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 if (job.isActive) job.cancel()
                 job = launch {
-                    viewModel.register(RegisterBody(name, email, password)).collect {
+                    viewModel.register(RegisterBody(email, name, password)).collect {
                         it.onSuccess { response ->
                             Toast.makeText(
                                 requireContext(),

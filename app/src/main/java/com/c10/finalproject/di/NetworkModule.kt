@@ -1,6 +1,8 @@
 package com.c10.finalproject.di
 
 import com.c10.finalproject.data.remote.auth.ApiServiceAuth
+import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
+import com.c10.finalproject.data.remote.user.ApiServiceUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +21,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val baseUrl = "https://final-project-be-production.up.railway.app/" // Change ip address
+    private const val baseUrl =
+        "https://final-project-be-production-6de7.up.railway.app/" // Change ip address
 
     @Singleton
     @Provides
@@ -40,4 +43,15 @@ object NetworkModule {
     @Provides
     fun provideApiServiceAuth(retrofit: Retrofit): ApiServiceAuth =
         retrofit.create(ApiServiceAuth::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiServiceUser(retrofit: Retrofit): ApiServiceUser =
+        retrofit.create(ApiServiceUser::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiServiceTicket(retrofit: Retrofit): ApiServiceTicket =
+        retrofit.create(ApiServiceTicket::class.java)
+
 }

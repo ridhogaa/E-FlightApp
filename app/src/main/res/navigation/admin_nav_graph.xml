@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/detailFragmentAdmin"
-        android:name="com.c10.finalproject.ui.admin.transaction.DetailTransactionFragment"
+        android:name="com.c10.finalproject.ui.admin.detailtransaction.DetailTransactionFragment"
         tools:layout="@layout/fragment_detail_transaction"
         android:label="Detail Transaction">
 

@@ -7,6 +7,7 @@ import com.c10.finalproject.data.remote.auth.model.LoginBody
 import com.c10.finalproject.data.remote.auth.model.LoginResponse
 import com.c10.finalproject.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,7 +23,7 @@ class LoginViewModel @Inject constructor(
     // TODO: Implement the ViewModel
     suspend fun login(loginBody: LoginBody) = authRepository.login(loginBody)
 
-    fun setToken(token: String) = viewModelScope.launch {
+    fun setToken(token: String) = CoroutineScope(Dispatchers.IO).launch {
         dataStoreManager.setToken(token)
     }
 }
