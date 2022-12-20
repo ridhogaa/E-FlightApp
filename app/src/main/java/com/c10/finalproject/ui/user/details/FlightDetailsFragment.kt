@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -13,9 +14,12 @@ import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
 import com.c10.finalproject.databinding.FragmentFlightDetailsBinding
 import com.c10.finalproject.databinding.FragmentHomeBinding
+import com.c10.finalproject.ui.UserActivity
 import com.c10.finalproject.ui.user.home.HomeViewModel
+import com.c10.finalproject.ui.user.transaction.BottomSheetTransactionFragment
 import com.c10.finalproject.utils.Utils
 import com.c10.finalproject.wrapper.Resource
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +28,7 @@ class FlightDetailsFragment : Fragment() {
     private val viewModel: FlightDetailsViewModel by activityViewModels()
     private var _binding: FragmentFlightDetailsBinding? = null
     private val binding get() = _binding!!
+    private val bundle = Bundle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,18 @@ class FlightDetailsFragment : Fragment() {
         viewModel.getDetail(arguments?.getInt("ID_TICKET")!!)
         observeData()
         btnCancel()
+        btnConfirm()
+    }
+
+    private fun btnConfirm() {
+        binding.btnConfirm.setOnClickListener {
+            val bottomSheet = BottomSheetTransactionFragment()
+            bottomSheet.arguments = bundle
+            bottomSheet.show(
+                childFragmentManager,
+                "BottomSheet"
+            )
+        }
     }
 
     private fun btnCancel() {
@@ -67,13 +84,16 @@ class FlightDetailsFragment : Fragment() {
     private fun setView(gtbir: GetTicketByIdResponse?) {
         gtbir?.data?.let {
             binding.apply {
+                bundle.putString("AIRPLANE_NAME", it.airplaneName)
+                bundle.putInt("PRICE_AIRPLANE", it.price!!)
+                bundle.putInt("ID_TICKET_ORDER", it.id!!)
                 airplaneName.text = it.airplaneName
                 from.text = it.origin
                 to.text = it.destination
                 fromTime.text = it.departureTime?.substring(11, 16)
                 toTime.text = it.arrivalTime?.substring(11, 16)
                 category.text = it.category
-                price.text = Utils.formatRupiah(it.price!!)
+                price.text = Utils.formatRupiah(it.price)
                 etDepartureDate.setText(it.departureTime?.substring(0, 10))
                 if (it.category.equals("one_way", true)) {
                     tilReturnDate.visibility = View.GONE

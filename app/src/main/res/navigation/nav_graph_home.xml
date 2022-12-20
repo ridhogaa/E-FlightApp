@@ -59,4 +59,9 @@
             android:id="@+id/action_searchResultFragment_to_flightDetailsFragment"
             app:destination="@id/flightDetailsFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/bottomSheetTransactionFragment"
+        android:name="com.c10.finalproject.ui.user.transaction.BottomSheetTransactionFragment"
+        android:label="fragment_bottom_sheet_transaction"
+        tools:layout="@layout/fragment_bottom_sheet_transaction" />
 </navigation>
