@@ -22,4 +22,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindsTicketRepository(ticketRepositoryImpl: TicketRepositoryImpl): TicketRepository
+
+    @Binds
+    abstract fun bindsOrderRepository(orderRepositoryImpl: OrderRepositoryImpl): OrderRepository
 }
