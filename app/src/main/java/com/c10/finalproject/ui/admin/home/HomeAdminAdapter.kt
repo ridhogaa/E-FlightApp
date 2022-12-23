@@ -1,10 +1,13 @@
 package com.c10.finalproject.ui.admin.home
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.tickets.model.Data
 import com.c10.finalproject.databinding.ItemFligtHomeBinding
 import com.c10.finalproject.utils.Utils
@@ -50,6 +53,12 @@ class HomeAdminAdapter: RecyclerView.Adapter<HomeAdminAdapter.HomeAdminViewHolde
                 tvDepartureTimeItemHome.text = data.departureTime?.substring(11, 16)
                 tvLandingTimeItemHome.text = data.arrivalTime?.substring(11, 16)
 
+                cvTicketHomeAdmin.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putInt("ID_TICKET", data.id!!)
+                    it.findNavController()
+                        .navigate(R.id.action_homeAdminFragment_to_detailHomeFragmentAdmin, bundle)
+                }
             }
         }
     }

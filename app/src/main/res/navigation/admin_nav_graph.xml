@@ -12,13 +12,16 @@
         android:label="Home">
 
         <action
-            android:id="@+id/action_homeFragment_to_transactionFragment"
+            android:id="@+id/action_homeAdminFragment_to_transactionFragment"
             app:destination="@id/transactionFragmentAdmin" />
 
         <action
-            android:id="@+id/action_homeFragment_to_flightFragment"
+            android:id="@+id/action_homeAdminFragment_to_flightFragment"
             app:destination="@id/flightFragmentAdmin" />
 
+        <action
+            android:id="@+id/action_homeAdminFragment_to_detailHomeFragmentAdmin"
+            app:destination="@id/detailTicketHomeAdmin" />
     </fragment>
 
     <fragment
@@ -45,6 +48,14 @@
         android:name="com.c10.finalproject.ui.admin.flight.FlightFragment"
         tools:layout="@layout/fragment_flight"
         android:label="Flight">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailTicketHomeAdmin"
+        android:name="com.c10.finalproject.ui.admin.home.detail.HomeDetailAdminFragment"
+        tools:layout="@layout/fragment_home_detail_admin"
+        android:label="Detail Ticket Home Admin">
 
     </fragment>
 
