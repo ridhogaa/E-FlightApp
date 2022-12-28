@@ -1,9 +1,8 @@
 package com.c10.finalproject.data.repository
 
+import androidx.room.Update
 import com.c10.finalproject.data.remote.tickets.datasource.TicketRemoteDataSource
-import com.c10.finalproject.data.remote.tickets.model.Data
-import com.c10.finalproject.data.remote.tickets.model.DataTicket
-import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.tickets.model.*
 import com.c10.finalproject.wrapper.Resource
 import javax.inject.Inject
 
@@ -15,6 +14,9 @@ import javax.inject.Inject
 interface TicketRepository {
     suspend fun getTickets(): Resource<List<Data>>
     suspend fun getTicketById(id: Int): Resource<GetTicketByIdResponse>
+
+    suspend fun updateTicket(token: String, id: Int): Resource<UpdateTicketResponse>
+
 }
 
 class TicketRepositoryImpl @Inject constructor(private val dataSource: TicketRemoteDataSource) :
@@ -48,6 +50,11 @@ class TicketRepositoryImpl @Inject constructor(private val dataSource: TicketRem
             dataSource.getTicketById(id)
         }
     }
+
+    override suspend fun updateTicket(token: String, id: Int): Resource<UpdateTicketResponse> = proceed {
+        dataSource.updateTicket(token, id)
+    }
+
 
     private suspend fun <T> proceed(coroutines: suspend () -> T): Resource<T> {
         return try {

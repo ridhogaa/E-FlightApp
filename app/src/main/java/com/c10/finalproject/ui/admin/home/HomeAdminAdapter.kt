@@ -1,5 +1,6 @@
 package com.c10.finalproject.ui.admin.home
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -57,7 +58,7 @@ class HomeAdminAdapter: RecyclerView.Adapter<HomeAdminAdapter.HomeAdminViewHolde
                     val bundle = Bundle()
                     bundle.putInt("ID_TICKET", data.id!!)
                     it.findNavController()
-                        .navigate(R.id.action_homeAdminFragment_to_detailHomeFragmentAdmin, bundle)
+                        .navigate(R.id.action_homeFragmentAdmin_to_editTicketAdminFragment, bundle)
                 }
             }
         }

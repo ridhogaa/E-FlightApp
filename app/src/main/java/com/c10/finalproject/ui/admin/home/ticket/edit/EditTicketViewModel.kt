@@ -1,4 +1,4 @@
-package com.c10.finalproject.ui.admin.home.detail
+package com.c10.finalproject.ui.admin.home.ticket.edit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,12 +13,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeDetailAdminViewModel @Inject constructor(private val ticketRepository: TicketRepository) :
+class EditTicketViewModel @Inject constructor(private val ticketRepository: TicketRepository) :
     ViewModel() {
 
     // TODO: Implement the ViewModel
     private val _detailResult = MutableLiveData<Resource<GetTicketByIdResponse>>()
     val detailResult: LiveData<Resource<GetTicketByIdResponse>> get() = _detailResult
+
+    private val _ticket = MutableLiveData<Resource<List<String>>>()
+    val ticket: LiveData<Resource<List<String>>> get() = _ticket
+
+    init {
+        getTickets()
+    }
+
+    private fun getTickets() = viewModelScope.launch(Dispatchers.IO) {
+        _ticket.postValue(Resource.Loading())
+        val ticket = ticketRepository.getTickets()
+        val ticketList = mutableListOf<String>()
+
+        ticket.payload?.forEach {
+            ticketList.add(it.origin.toString())
+        }
+
+        viewModelScope.launch(Dispatchers.Main) {
+            _ticket.postValue(Resource.Success(ticketList.distinct()))
+
+        }
+    }
 
     fun getDetail(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -28,4 +50,8 @@ class HomeDetailAdminViewModel @Inject constructor(private val ticketRepository:
             }
         }
     }
+
+    fun updateTicket(token: String, id: Int) =
+        viewModelScope.launch(Dispatchers.IO) { ticketRepository.updateTicket(token, id) }
+
 }

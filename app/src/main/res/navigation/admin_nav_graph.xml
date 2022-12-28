@@ -20,8 +20,8 @@
             app:destination="@id/flightFragmentAdmin" />
 
         <action
-            android:id="@+id/action_homeAdminFragment_to_detailHomeFragmentAdmin"
-            app:destination="@id/detailTicketHomeAdmin" />
+            android:id="@+id/action_homeFragmentAdmin_to_editTicketAdminFragment"
+            app:destination="@id/editTicketAdminFragment" />
     </fragment>
 
     <fragment
@@ -45,17 +45,17 @@
 
     <fragment
         android:id="@+id/flightFragmentAdmin"
-        android:name="com.c10.finalproject.ui.admin.flight.FlightFragment"
-        tools:layout="@layout/fragment_flight"
+        android:name="com.c10.finalproject.ui.admin.flight.FlightAdminFragment"
+        tools:layout="@layout/fragment_admin_flight"
         android:label="Flight">
 
     </fragment>
 
     <fragment
-        android:id="@+id/detailTicketHomeAdmin"
-        android:name="com.c10.finalproject.ui.admin.home.detail.HomeDetailAdminFragment"
-        tools:layout="@layout/fragment_home_detail_admin"
-        android:label="Detail Ticket Home Admin">
+        android:id="@+id/editTicketAdminFragment"
+        android:name="com.c10.finalproject.ui.admin.home.ticket.edit.EditTicketFragment"
+        tools:layout="@layout/fragment_edit_ticket"
+        android:label="Edit Ticket">
 
     </fragment>
 
