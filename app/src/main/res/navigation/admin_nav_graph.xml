@@ -49,6 +49,9 @@
         tools:layout="@layout/fragment_admin_flight"
         android:label="Flight">
 
+        <action
+            android:id="@+id/action_flightFragmentAdmin_to_homeFragmentAdmin"
+            app:destination="@id/homeFragmentAdmin" />
     </fragment>
 
     <fragment

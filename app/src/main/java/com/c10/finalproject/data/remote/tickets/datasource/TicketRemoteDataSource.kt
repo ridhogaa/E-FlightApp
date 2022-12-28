@@ -1,10 +1,8 @@
 package com.c10.finalproject.data.remote.tickets.datasource
 
 import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
-import com.c10.finalproject.data.remote.tickets.model.AddTicketResponse
-import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
-import com.c10.finalproject.data.remote.tickets.model.GetTicketResponse
-import com.c10.finalproject.data.remote.tickets.model.UpdateTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.*
+import retrofit2.Response
 import javax.inject.Inject
 
 /**
@@ -17,6 +15,8 @@ interface TicketRemoteDataSource {
     suspend fun getTicketById(id: Int): GetTicketByIdResponse
     suspend fun updateTicket(token: String, id: Int): UpdateTicketResponse
 
+    suspend fun addTicket(token: String, addTicketBody: AddTicketBody): Response<AddTicketResponse>
+
 }
 
 class TicketRemoteDataSourceImpl @Inject constructor(private val apiServiceTicket: ApiServiceTicket) :
@@ -28,4 +28,8 @@ class TicketRemoteDataSourceImpl @Inject constructor(private val apiServiceTicke
 
     override suspend fun updateTicket(token: String, id: Int): UpdateTicketResponse =
         apiServiceTicket.updateTicket(token, id)
+
+    override suspend fun addTicket(token: String, addTicketBody: AddTicketBody): Response<AddTicketResponse> =
+        apiServiceTicket.addTicket(token, addTicketBody)
+
 }

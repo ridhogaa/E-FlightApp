@@ -1,9 +1,9 @@
 package com.c10.finalproject.data.remote.tickets
 
-import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
-import com.c10.finalproject.data.remote.tickets.model.GetTicketResponse
-import com.c10.finalproject.data.remote.tickets.model.PostOrderResponse
-import com.c10.finalproject.data.remote.tickets.model.UpdateTicketResponse
+import com.c10.finalproject.data.remote.auth.model.RegisterResponse
+import com.c10.finalproject.data.remote.tickets.model.*
+import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -28,6 +28,13 @@ interface ApiServiceTicket {
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): PostOrderResponse
+
+    @POST("api/v1/tickets/add")
+    suspend fun addTicket(
+        @Header("Authorization") token: String,
+        @Body addTicketBody: AddTicketBody
+    ): Response<AddTicketResponse>
+
 
     @PUT("api/v1/tickets/update/{id}")
     suspend fun updateTicket(
