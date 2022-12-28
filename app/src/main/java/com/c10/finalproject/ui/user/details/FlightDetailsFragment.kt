@@ -10,7 +10,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
+import com.c10.finalproject.data.local.database.entity.WishlistEntity
 import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.model.user.GetUserResponse
 import com.c10.finalproject.databinding.FragmentFlightDetailsBinding
 import com.c10.finalproject.ui.user.transaction.BottomSheetTransactionFragment
 import com.c10.finalproject.utils.Utils
@@ -24,6 +26,7 @@ class FlightDetailsFragment : Fragment() {
     private var _binding: FragmentFlightDetailsBinding? = null
     private val binding get() = _binding!!
     private val bundle = Bundle()
+    private lateinit var wishlist: WishlistEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +38,11 @@ class FlightDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkFav()
         viewModel.getDetail(arguments?.getInt("ID_TICKET")!!)
-        viewModel.getToken().observe(viewLifecycleOwner) {
-            fabFav(it)
-            viewModel.getWishlist(it, arguments?.getInt("ID_TICKET")!!)
+        viewModel.getId().observe(viewLifecycleOwner) {
+            observeData(it)
         }
-        observeData()
+        fabFav()
         btnCancel()
         btnConfirm()
     }
@@ -57,13 +58,13 @@ class FlightDetailsFragment : Fragment() {
         }
     }
 
-    private fun fabFav(token: String) {
+    private fun fabFav() {
         binding.fabFav.setOnClickListener {
-            viewModel.addWishlist(token, arguments?.getInt("ID_TICKET")!!)
+            viewModel.addFavorite(wishlist)
             fab(false)
         }
         binding.fabFav2.setOnClickListener {
-            viewModel.deleteWishlist(token, arguments?.getInt("ID_TICKET")!!)
+            viewModel.deleteFavorite(wishlist)
             fab(true)
         }
     }
@@ -73,7 +74,8 @@ class FlightDetailsFragment : Fragment() {
         binding.fabFav2.isVisible = !flag
     }
 
-    private fun checkFav() {
+    private fun checkFav(ticketId: Int, userId: Int) {
+        viewModel.isFavorite(ticketId, userId)
         viewModel.isFav.observe(viewLifecycleOwner) {
             if (it == true) {
                 fab(false)
@@ -100,7 +102,7 @@ class FlightDetailsFragment : Fragment() {
         }
     }
 
-    private fun observeData() {
+    private fun observeData(userId: Int) {
         viewModel.detailResult.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
@@ -112,6 +114,22 @@ class FlightDetailsFragment : Fragment() {
                 is Resource.Success -> {
                     setLoadingState(false)
                     setView(it.payload)
+
+                    checkFav(it.payload?.data?.id!!, userId)
+                    wishlist = WishlistEntity(
+                        ticketId = it.payload.data.id,
+                        userId = userId,
+                        airplaneName = it.payload.data.airplaneName,
+                        departureTime = it.payload.data.departureTime,
+                        arrivalTime = it.payload.data.arrivalTime,
+                        returnTime = it.payload.data.returnTime.toString(),
+                        arrival2Time = it.payload.data.arrival2Time.toString(),
+                        price = it.payload.data.price,
+                        category = it.payload.data.category,
+                        origin = it.payload.data.origin,
+                        destination = it.payload.data.destination
+                    )
+
                 }
                 else -> {}
             }

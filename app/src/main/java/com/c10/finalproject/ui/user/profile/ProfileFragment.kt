@@ -100,7 +100,7 @@ class ProfileFragment : Fragment() {
                 is Resource.Success -> {
                     //setLoadingState(false)
                     setView(it.payload!!)
-                    binding.btnUpdate.setOnClickListener { _ -> toUpdateAccount(it.payload!!) }
+                    binding.btnUpdate.setOnClickListener { _ -> toUpdateAccount(it.payload) }
                 }
                 else -> {
 
@@ -205,7 +205,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun toLogout() {
-        viewModel.clearToken()
+        viewModel.clear()
         startActivity(Intent(requireContext(), MainActivity::class.java))
         activity?.finish()
     }

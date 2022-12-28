@@ -59,11 +59,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiServiceWishlist(retrofit: Retrofit): ApiServiceWishlist =
-        retrofit.create(ApiServiceWishlist::class.java)
-
-    @Singleton
-    @Provides
     fun provideApiServiceNotification(retrofit: Retrofit): ApiServiceNotification =
         retrofit.create(ApiServiceNotification::class.java)
 

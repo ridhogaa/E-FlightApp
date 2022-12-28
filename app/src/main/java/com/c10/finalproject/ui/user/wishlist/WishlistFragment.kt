@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WishlistFragment : Fragment() {
-
     private val viewModel: WishlistViewModel by activityViewModels()
     private var _binding: FragmentWishlistBinding? = null
     private val binding get() = _binding!!
@@ -29,8 +28,8 @@ class WishlistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getToken().observe(viewLifecycleOwner) {
-            viewModel.getWishlists(it)
+        viewModel.getId().observe(viewLifecycleOwner) {
+            viewModel.getWishlist(it)
         }
         initList()
         observeData()
@@ -59,9 +58,7 @@ class WishlistFragment : Fragment() {
                     binding.pbWishlistList.isVisible = false
                     binding.rvWishlist.isVisible = true
                     binding.emptyState.isVisible = false
-                    viewModel.ticket.observe(viewLifecycleOwner) { list ->
-                        binding.rvWishlist.adapter = WishlistAdapter(list)
-                    }
+                    binding.rvWishlist.adapter = WishlistAdapter(it.data)
                 }
                 else -> {
                     binding.pbWishlistList.isVisible = false

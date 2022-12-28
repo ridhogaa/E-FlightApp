@@ -21,4 +21,8 @@ class LoginViewModel @Inject constructor(
     fun setToken(token: String) = CoroutineScope(Dispatchers.IO).launch {
         dataStoreManager.setToken(token)
     }
+
+    fun setId(id: Int) = CoroutineScope(Dispatchers.IO).launch {
+        dataStoreManager.setId(id)
+    }
 }

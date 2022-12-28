@@ -42,7 +42,7 @@ class AuthRepositoryImplTest {
 
     @Test
     fun login() = runBlocking {
-        val expected = LoginResponse("test", "test", "test", "test")
+        val expected = LoginResponse("test", "test", "test", "test", "test", 5)
         Mockito.`when`(apiServiceAuth.login(LoginBody("test", "test")))
             .thenReturn(Response.success(expected))
         authRepository.login(LoginBody("test", "test")).collect {

@@ -17,12 +17,10 @@ import javax.inject.Inject
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
     private val notificationRepository: NotificationRepository,
-    private val userRepository: UserRepository,
     private val ticketRepository: TicketRepository,
     private val orderRepository: OrderRepository,
     private val dataStoreManager: DataStoreManager
-) :
-    ViewModel() {
+) : ViewModel() {
     // TODO: Implement the ViewModel
 
     private val _notification = MutableLiveData<Resource<List<DataNotification>>>()
@@ -31,15 +29,14 @@ class NotificationViewModel @Inject constructor(
     private val _ticket = MutableLiveData<List<DataTicket>>()
     val ticket: LiveData<List<DataTicket>> get() = _ticket
 
-    fun getNotifications(token: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun getNotifications(userId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _notification.postValue(Resource.Loading())
         val notif = notificationRepository.getNotifications()
         val notifList = mutableListOf<DataNotification>()
         val ticketList = mutableListOf<DataTicket>()
-        val user = userRepository.getUserByToken(token).payload
         val order = orderRepository.getOrders().payload
         notif.payload?.forEachIndexed { index, it ->
-            if (it.userId == user!!.data!!.id && it.orderId == order!![index].id) {
+            if (it.userId == userId && it.orderId == order!![index].id) {
                 notifList.add(it)
                 ticketList.add(ticketRepository.getTicketById(order[index].ticketId!!).payload!!.data!!)
             } else {
@@ -58,5 +55,7 @@ class NotificationViewModel @Inject constructor(
     }
 
     fun getToken(): LiveData<String> = dataStoreManager.getToken.asLiveData()
+
+    fun getId() = dataStoreManager.getId.asLiveData()
 
 }

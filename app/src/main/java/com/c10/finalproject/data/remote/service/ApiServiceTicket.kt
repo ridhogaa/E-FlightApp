@@ -5,8 +5,6 @@ import com.c10.finalproject.data.remote.model.order.GetOrderResponse
 import com.c10.finalproject.data.remote.model.order.PostOrderResponse
 import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
 import com.c10.finalproject.data.remote.model.ticket.GetTicketResponse
-import com.c10.finalproject.data.remote.model.wishlist.GetWishlistResponse
-import com.c10.finalproject.data.remote.model.wishlist.PostWishlistResponse
 import retrofit2.http.*
 
 /**

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.model.ticket.DataTicket
+import com.c10.finalproject.data.local.database.entity.WishlistEntity
 import com.c10.finalproject.databinding.ItemListWishlistBinding
 import com.c10.finalproject.utils.Utils
 
@@ -15,12 +15,12 @@ import com.c10.finalproject.utils.Utils
  * Github: https://github.com/ridhogaa
  */
 
-class WishlistAdapter(private val listData: List<DataTicket>) :
+class WishlistAdapter(private val listData: List<WishlistEntity>) :
     RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
 
     class WishlistViewHolder(private val binding: ItemListWishlistBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: DataTicket) {
+        fun bind(data: WishlistEntity) {
             with(binding) {
                 textView.text = data.airplaneName
                 textView8.text = data.origin
@@ -32,7 +32,7 @@ class WishlistAdapter(private val listData: List<DataTicket>) :
             }
             binding.cvWishlist.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putInt("ID_TICKET", data.id!!)
+                bundle.putInt("ID_TICKET", data.ticketId!!)
                 it.findNavController()
                     .navigate(R.id.action_wishlistFragment_to_flightDetailsFragment, bundle)
             }

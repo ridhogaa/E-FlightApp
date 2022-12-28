@@ -4,17 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.c10.finalproject.data.local.database.entity.FavoriteTicketEntity
+import com.c10.finalproject.data.local.database.dao.WishlistDao
+import com.c10.finalproject.data.local.database.entity.WishlistEntity
 
 /**
  * @Author: ridhogymnastiar
  * Github: https://github.com/ridhogaa
  */
 
-@Database(entities = [FavoriteTicketEntity::class], version = 1)
+@Database(entities = [WishlistEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-//    abstract fun favoriteMovieDao(): FavoriteMovieDao
-//    abstract fun userDao(): UserDao
+    abstract fun wishlistDao(): WishlistDao
 
     companion object {
         private var dbINSTANCE: AppDatabase? = null

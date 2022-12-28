@@ -27,15 +27,26 @@ class DataStoreManager(@ApplicationContext private val context: Context) {
         }
     }
 
-    suspend fun clearToken() {
+    val getId: Flow<Int> = context.dataStore.data.map {
+        it[ID_USER_KEY] ?: 0
+    }
+
+    suspend fun setId(id: Int) {
         context.dataStore.edit {
-            it.remove(TOKEN_USER_KEY)
+            it[ID_USER_KEY] = id
+        }
+    }
+
+    suspend fun clear() {
+        context.dataStore.edit {
+            it.clear()
         }
     }
 
     companion object {
         private const val DATASTORE_NAME = "datastore_preferences"
         private val TOKEN_USER_KEY = stringPreferencesKey("token_user_key")
+        private val ID_USER_KEY = intPreferencesKey("id_user_key")
         private val Context.dataStore by preferencesDataStore(
             name = DATASTORE_NAME
         )

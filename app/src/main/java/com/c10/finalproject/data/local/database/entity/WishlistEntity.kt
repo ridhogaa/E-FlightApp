@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "favorite_ticket")
-class FavoriteTicketEntity(
+class WishlistEntity(
     @PrimaryKey(autoGenerate = true)
     @field:ColumnInfo(name = "id_favorite")
     var idFavorite: Int? = null,
@@ -41,12 +41,16 @@ class FavoriteTicketEntity(
     var destination: String? = null,
 ) : Parcelable
 
-//"airplane_name": "Garuda Indonesia",
-//"departure_time": "2022-12-27T16:41:27.805Z",
-//"arrival_time": "2022-12-27T18:41:32.805Z",
-//"return_time": null,
-//"arrival2_time": null,
-//"price": 380000,
-//"category": "one_way",
-//"origin": "Jakarta",
-//"destination": "Medan",
+//
+// idFavorite
+// ticketId:
+// userId
+// airplaneName
+// departureTime
+// arrivalTime
+// returnTime
+// arrival2Time
+// price
+// category
+// origin
+// destination

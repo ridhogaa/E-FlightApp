@@ -17,8 +17,7 @@ import javax.inject.Inject
 class HistoryViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager,
     private val orderRepository: OrderRepository,
-    private val ticketRepository: TicketRepository,
-    private val userRepository: UserRepository
+    private val ticketRepository: TicketRepository
 ) : ViewModel() {
 
     private val _history = MutableLiveData<Resource<List<DataOrder>>>()
@@ -27,14 +26,13 @@ class HistoryViewModel @Inject constructor(
     private val _ticket = MutableLiveData<List<DataTicket>>()
     val ticket: LiveData<List<DataTicket>> get() = _ticket
 
-    fun getOrder(token: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun getOrder(userId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _history.postValue(Resource.Loading())
         val order = orderRepository.getOrders()
         val orderList = mutableListOf<DataOrder>()
         val ticketList = mutableListOf<DataTicket>()
-        val user = userRepository.getUserByToken(token).payload
         order.payload?.forEach {
-            if (it.userId.toString().equals(user!!.data!!.id.toString(), false)) {
+            if (it.userId.toString().equals(userId.toString(), false)) {
                 orderList.add(it)
                 ticketList.add(ticketRepository.getTicketById(it.ticketId!!).payload!!.data!!)
             } else {
@@ -53,4 +51,6 @@ class HistoryViewModel @Inject constructor(
     }
 
     fun getToken(): LiveData<String> = dataStoreManager.getToken.asLiveData()
+
+    fun getId() = dataStoreManager.getId.asLiveData()
 }

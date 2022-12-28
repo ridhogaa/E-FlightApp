@@ -34,10 +34,10 @@ class NotificationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getToken().observe(viewLifecycleOwner) {
+        initList()
+        observeData()
+        viewModel.getId().observe(viewLifecycleOwner) {
             viewModel.getNotifications(it)
-            initList()
-            observeData()
         }
     }
 
@@ -76,7 +76,6 @@ class NotificationFragment : Fragment() {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

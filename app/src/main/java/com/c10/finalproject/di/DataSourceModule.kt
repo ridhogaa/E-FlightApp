@@ -1,5 +1,7 @@
 package com.c10.finalproject.di
 
+import com.c10.finalproject.data.local.datasource.WishlistLocalDataSource
+import com.c10.finalproject.data.local.datasource.WishlistLocalDataSourceImpl
 import com.c10.finalproject.data.remote.datasource.*
 import dagger.Binds
 import dagger.Module
@@ -28,6 +30,5 @@ abstract class DataSourceModule {
     abstract fun provideNotificationDataSource(notificationRemoteDataSource: NotificationRemoteDataSourceImpl): NotificationRemoteDataSource
 
     @Binds
-    abstract fun provideWishlistDataSource(wishlistRemoteDataSource: WishlistRemoteDataSourceImpl): WishlistRemoteDataSource
-
+    abstract fun provideWishlistLocalDataSource(wishlistLocalDataSource: WishlistLocalDataSourceImpl): WishlistLocalDataSource
 }

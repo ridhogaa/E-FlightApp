@@ -30,7 +30,7 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getToken().observe(viewLifecycleOwner) {
+        viewModel.getId().observe(viewLifecycleOwner) {
             viewModel.getOrder(it)
         }
         initList()

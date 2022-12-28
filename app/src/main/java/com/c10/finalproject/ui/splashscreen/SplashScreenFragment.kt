@@ -38,12 +38,14 @@ class SplashScreenFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.getToken().observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
-                    if (it.equals(TOKEN_ADMIN, true)) {
-                        startActivity(Intent(requireContext(), AdminActivity::class.java))
-                        activity?.finish()
-                    } else {
-                        startActivity(Intent(requireContext(), UserActivity::class.java))
-                        activity?.finish()
+                    viewModel.getId().observe(viewLifecycleOwner) { id ->
+                        if (id == ID_ADMIN) {
+                            startActivity(Intent(requireContext(), AdminActivity::class.java))
+                            activity?.finish()
+                        } else {
+                            startActivity(Intent(requireContext(), UserActivity::class.java))
+                            activity?.finish()
+                        }
                     }
                 } else {
                     findNavController().navigate(R.id.loginFragment)
@@ -53,7 +55,6 @@ class SplashScreenFragment : Fragment() {
     }
 
     companion object {
-        private const val TOKEN_ADMIN =
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBiaW5hci5jby5pZCIsInJvbGUiOnsiaWQiOjIsIm5hbWUiOiJBRE1JTiJ9LCJpYXQiOjE2NzE4MDk5NzZ9.yEZQkQKTL9TksWZNnESTXsukOjd4VKnukmKt6pCOCIA"
+        private const val ID_ADMIN = 7
     }
 }

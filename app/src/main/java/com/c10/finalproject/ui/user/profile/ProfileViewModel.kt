@@ -39,9 +39,10 @@ class ProfileViewModel @Inject constructor(
         }
 
 
-    fun clearToken() = CoroutineScope(Dispatchers.IO).launch {
-        dataStoreManager.clearToken()
+    fun clear() = CoroutineScope(Dispatchers.IO).launch {
+        dataStoreManager.clear()
     }
 
     fun getToken() = dataStoreManager.getToken
+
 }
