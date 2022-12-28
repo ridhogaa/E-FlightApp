@@ -1,5 +1,6 @@
 package com.c10.finalproject.ui.user.transaction
 
+import android.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -21,8 +22,6 @@ import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class BottomSheetTransactionFragment : BottomSheetDialogFragment() {
-
-
     private var _binding: FragmentBottomSheetTransactionBinding? = null
     private val binding get() = _binding!!
     private val viewModel: BottomSheetTransactionViewModel by activityViewModels()
@@ -51,17 +50,30 @@ class BottomSheetTransactionFragment : BottomSheetDialogFragment() {
                         .toInt() >= arguments?.getInt("PRICE_AIRPLANE")!!
                 ) {
                     viewModel.getToken().observe(viewLifecycleOwner) {
-                        viewModel.addOrder(
-                            "Bearer $it",
-                            arguments?.getInt("ID_TICKET_ORDER")!!
+                        val builder = AlertDialog.Builder(requireContext())
+                        builder.setTitle("Message Dialog")
+                        builder.setMessage(
+                            "Are you sure you want to buy this ticket? return your balance ${
+                                Utils.formatRupiah(
+                                    binding.etBalance.text.toString()
+                                        .toInt() - arguments?.getInt("PRICE_AIRPLANE")!!
+                                )
+                            }, you will be directed to the home to check your order history!"
                         )
-                        Toast.makeText(
-                            requireContext(),
-                            "Success Order!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        findNavController().navigate(R.id.homeFragment)
-//                        findNavController().navigate(R.id.action_bottomSheetTransactionFragment_to_homeFragment)
+
+                        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                            viewModel.addOrder(
+                                it,
+                                arguments?.getInt("ID_TICKET_ORDER")!!
+                            )
+                            findNavController().navigate(R.id.homeFragment)
+                        }
+
+                        builder.setNegativeButton(android.R.string.no) { dialog, which ->
+
+                        }
+                        builder.show()
+
                     }
                 } else {
                     Toast.makeText(requireContext(), "Low Balance!", Toast.LENGTH_SHORT).show()

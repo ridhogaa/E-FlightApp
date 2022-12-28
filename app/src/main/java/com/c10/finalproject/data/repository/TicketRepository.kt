@@ -1,9 +1,8 @@
 package com.c10.finalproject.data.repository
 
-import com.c10.finalproject.data.remote.tickets.datasource.TicketRemoteDataSource
-import com.c10.finalproject.data.remote.tickets.model.Data
-import com.c10.finalproject.data.remote.tickets.model.DataTicket
-import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.datasource.TicketRemoteDataSource
+import com.c10.finalproject.data.remote.model.ticket.Data
+import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
 import com.c10.finalproject.wrapper.Resource
 import javax.inject.Inject
 

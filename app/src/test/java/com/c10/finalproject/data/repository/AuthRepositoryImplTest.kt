@@ -1,17 +1,12 @@
 package com.c10.finalproject.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.asLiveData
-import com.c10.finalproject.data.remote.auth.ApiServiceAuth
-import com.c10.finalproject.data.remote.auth.model.LoginBody
-import com.c10.finalproject.data.remote.auth.model.LoginResponse
-import com.c10.finalproject.data.remote.auth.model.RegisterBody
-import com.c10.finalproject.data.remote.auth.model.RegisterResponse
-import io.mockk.mockk
+import com.c10.finalproject.data.remote.service.ApiServiceAuth
+import com.c10.finalproject.data.remote.model.auth.LoginBody
+import com.c10.finalproject.data.remote.model.auth.LoginResponse
+import com.c10.finalproject.data.remote.model.auth.RegisterBody
+import com.c10.finalproject.data.remote.model.auth.RegisterResponse
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -20,13 +15,8 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.any
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import retrofit2.Response
-import java.lang.Exception
 
 /**
  * @Author: ridhogymnastiar

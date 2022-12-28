@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.tickets.model.Data
+import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.databinding.ItemListSearchBinding
 import com.c10.finalproject.databinding.ItemListSearchBinding.inflate
 import com.c10.finalproject.utils.Utils

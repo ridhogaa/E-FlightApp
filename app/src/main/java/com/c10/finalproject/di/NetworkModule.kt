@@ -1,8 +1,6 @@
 package com.c10.finalproject.di
 
-import com.c10.finalproject.data.remote.auth.ApiServiceAuth
-import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
-import com.c10.finalproject.data.remote.user.ApiServiceUser
+import com.c10.finalproject.data.remote.service.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,5 +51,20 @@ object NetworkModule {
     @Provides
     fun provideApiServiceTicket(retrofit: Retrofit): ApiServiceTicket =
         retrofit.create(ApiServiceTicket::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiServiceOrder(retrofit: Retrofit): ApiServiceOrder =
+        retrofit.create(ApiServiceOrder::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiServiceWishlist(retrofit: Retrofit): ApiServiceWishlist =
+        retrofit.create(ApiServiceWishlist::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiServiceNotification(retrofit: Retrofit): ApiServiceNotification =
+        retrofit.create(ApiServiceNotification::class.java)
 
 }

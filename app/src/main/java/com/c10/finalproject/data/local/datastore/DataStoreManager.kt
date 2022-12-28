@@ -18,18 +18,18 @@ import kotlinx.coroutines.flow.map
 class DataStoreManager(@ApplicationContext private val context: Context) {
 
     val getToken: Flow<String> = context.dataStore.data.map {
-        it[TOKEN_USER_KEY]!!
+        it[TOKEN_USER_KEY] ?: ""
     }
 
     suspend fun setToken(token: String) {
         context.dataStore.edit {
-            it[TOKEN_USER_KEY] = token
+            it[TOKEN_USER_KEY] = "Bearer $token"
         }
     }
 
     suspend fun clearToken() {
         context.dataStore.edit {
-            it.clear()
+            it.remove(TOKEN_USER_KEY)
         }
     }
 

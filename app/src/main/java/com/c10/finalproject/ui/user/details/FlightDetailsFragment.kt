@@ -1,25 +1,20 @@
 package com.c10.finalproject.ui.user.details
 
-import androidx.lifecycle.ViewModelProvider
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
 import com.c10.finalproject.databinding.FragmentFlightDetailsBinding
-import com.c10.finalproject.databinding.FragmentHomeBinding
-import com.c10.finalproject.ui.UserActivity
-import com.c10.finalproject.ui.user.home.HomeViewModel
 import com.c10.finalproject.ui.user.transaction.BottomSheetTransactionFragment
 import com.c10.finalproject.utils.Utils
 import com.c10.finalproject.wrapper.Resource
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +35,12 @@ class FlightDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkFav()
         viewModel.getDetail(arguments?.getInt("ID_TICKET")!!)
+        viewModel.getToken().observe(viewLifecycleOwner) {
+            fabFav(it)
+            viewModel.getWishlist(it, arguments?.getInt("ID_TICKET")!!)
+        }
         observeData()
         btnCancel()
         btnConfirm()
@@ -57,9 +57,46 @@ class FlightDetailsFragment : Fragment() {
         }
     }
 
+    private fun fabFav(token: String) {
+        binding.fabFav.setOnClickListener {
+            viewModel.addWishlist(token, arguments?.getInt("ID_TICKET")!!)
+            fab(false)
+        }
+        binding.fabFav2.setOnClickListener {
+            viewModel.deleteWishlist(token, arguments?.getInt("ID_TICKET")!!)
+            fab(true)
+        }
+    }
+
+    private fun fab(flag: Boolean) {
+        binding.fabFav.isVisible = flag
+        binding.fabFav2.isVisible = !flag
+    }
+
+    private fun checkFav() {
+        viewModel.isFav.observe(viewLifecycleOwner) {
+            if (it == true) {
+                fab(false)
+            } else {
+                fab(true)
+            }
+        }
+    }
+
     private fun btnCancel() {
         binding.btnCancel.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Message Dialog")
+            builder.setMessage("Are you sure you want to return to the home page?")
 
+            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                findNavController().navigate(R.id.homeFragment)
+            }
+
+            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+
+            }
+            builder.show()
         }
     }
 
