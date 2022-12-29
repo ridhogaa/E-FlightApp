@@ -5,5 +5,5 @@ package com.c10.finalproject.ui.admin.transaction
  * Github: https://github.com/ridhogaa
  */
 
-class TransactionViewModel {
+class TransactionAdminViewModel {
 }
