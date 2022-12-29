@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
 import com.c10.finalproject.databinding.FragmentEditTicketBinding
 import com.c10.finalproject.utils.Utils
 import com.c10.finalproject.wrapper.Resource
@@ -74,138 +76,138 @@ class EditTicketFragment : Fragment() {
 
     private fun buttonListerner() {
 
-//        binding.btnSaveEdit.setOnClickListener {
-//
-//            if (validationInput()) {
-//
-//                val originPlace = binding.etFrom.text.toString().trim()
-//                val directionPlace = binding.etTo.text.toString().trim()
-//
-//                // date
-//                val departureDate = binding.etDepartureDateFlight.text.toString().trim()
-//                val departTime1 = binding.etTimeDepartureFlight.text.toString().trim()
-//                val landingTime1 = binding.etTimeLandingFlight.text.toString().trim()
-//
-//                // date used
-//                val departure_time = "${departureDate}T${departTime1}:00.000Z"
-//                val arrival_time = "${departureDate}T${landingTime1}:00.000Z"
-//
-//                val returnDate = binding.etReturnDateFlight.text.toString().trim()
-//                val departTime2 = binding.etTimeDeparture2Flight.text.toString().trim()
-//                val landingTime2 = binding.etTimeLanding2Flight.text.toString().trim()
-//
-//                //  date used
-//                val return_time = "${returnDate}T${departTime2}:00.000Z"
-//                val arrival2_time = "${returnDate}T${landingTime2}:00.000Z"
-//
-//                Log.d("DATEEE", departure_time)
-//
-//                val price = binding.etPriceFlight.text.toString().trim().toInt()
-//                val choosenCategory = binding.etTypeFlight.text.toString().trim()
-//
-//                // check whether origin and direction is the same place or not
-//                if (originPlace != directionPlace) {
-//                    // do post method
-//
-//                    viewModel.getToken().observe(viewLifecycleOwner) {
-//
-//                        // do post method
-//
-//                        if (choosenCategory.equals("one_way")) {
-//
-//                            lifecycleScope.launchWhenResumed {
-//                                if (job.isActive) job.cancel()
-//                                job = launch {
-//                                    viewModel.updateTicket(
-//                                        "Bearer $it",
-//                                        3,
-//                                        UpdateTicketBody(
-//                                            departureTime = "${departure_time}",
-//                                            arrivalTime = "${arrival_time}",
-//                                            returnTime = null,
-//                                            arrival2Time = null,
-//                                            price = price,
-//                                            category = choosenCategory,
-//                                            origin = originPlace,
-//                                            destination = directionPlace,
-//
-//                                            )
-//                                    ).collect {
-//
-//                                        it.onSuccess { response ->
-//                                            Toast.makeText(
-//                                                requireContext(),
-//                                                "Success to Update Ticket",
-//                                                Toast.LENGTH_SHORT
-//                                            ).show()
-//                                            findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
-//                                        }
-//                                        it.onFailure { responseFailure ->
-//                                            Toast.makeText(
-//                                                requireContext(),
-//                                                responseFailure.message.toString(),
-//                                                Toast.LENGTH_SHORT
-//                                            ).show()
-//
-//                                        }
-//                                    }
-//                                }
-//                            }
-//
-//
-//                        } else {
-//                            lifecycleScope.launchWhenResumed {
-//                                if (job.isActive) job.cancel()
-//                                job = launch {
-//                                    viewModel.updateTicket(
-//                                        "Bearer $it",
-//                                        viewModel.getDetail(arguments?.getInt("ID_TICKET")!!),
-//                                        UpdateTicketBody(
-//                                            departureTime = "${departure_time}",
-//                                            arrivalTime = "${arrival_time}",
-//                                            returnTime = "${return_time}",
-//                                            arrival2Time = "${arrival2_time}",
-//                                            price = price,
-//                                            category = choosenCategory,
-//                                            origin = originPlace,
-//                                            destination = directionPlace,
-//
-//                                            )
-//                                    ).collect {
-//
-//                                        it.onSuccess { response ->
-//                                            Toast.makeText(
-//                                                requireContext(),
-//                                                "Success to Update Ticket",
-//                                                Toast.LENGTH_SHORT
-//                                            ).show()
-//                                            findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
-//                                        }
-//                                        it.onFailure { responseFailure ->
-//                                            Toast.makeText(
-//                                                requireContext(),
-//                                                responseFailure.message.toString(),
-//                                                Toast.LENGTH_SHORT
-//                                            ).show()
-//
-//                                        }
-//                                    }
-//                                }
-//                            }
-//
-//                        }
-//
-//
-//                    }
-//
-//                } else {
-//                    // set error
-//                    binding.tilTo.setError("Origin and direction couldn't be same!")
-//                    binding.tilTo.requestFocus()
-//                }
-//            }
-//
-//        }
+        binding.btnSaveEdit.setOnClickListener {
+
+            if (validationInput()) {
+
+                val originPlace = binding.etFrom.text.toString().trim()
+                val directionPlace = binding.etTo.text.toString().trim()
+
+                // date
+                val departureDate = binding.etDepartureDateFlight.text.toString().trim()
+                val departTime1 = binding.etTimeDepartureFlight.text.toString().trim()
+                val landingTime1 = binding.etTimeLandingFlight.text.toString().trim()
+
+                // date used
+                val departure_time = "${departureDate}T${departTime1}:00.000Z"
+                val arrival_time = "${departureDate}T${landingTime1}:00.000Z"
+
+                val returnDate = binding.etReturnDateFlight.text.toString().trim()
+                val departTime2 = binding.etTimeDeparture2Flight.text.toString().trim()
+                val landingTime2 = binding.etTimeLanding2Flight.text.toString().trim()
+
+                //  date used
+                val return_time = "${returnDate}T${departTime2}:00.000Z"
+                val arrival2_time = "${returnDate}T${landingTime2}:00.000Z"
+
+                Log.d("DATEEE", departure_time)
+
+                val price = binding.etPriceFlight.text.toString().trim().toInt()
+                val choosenCategory = binding.etTypeFlight.text.toString().trim()
+
+                // check whether origin and direction is the same place or not
+                if (originPlace != directionPlace) {
+                    // do post method
+
+                    viewModel.getToken().observe(viewLifecycleOwner) {
+
+                        // do post method
+
+                        if (choosenCategory.equals("one_way")) {
+
+                            lifecycleScope.launchWhenResumed {
+                                if (job.isActive) job.cancel()
+                                job = launch {
+                                    viewModel.updateTicket(
+                                        "Bearer $it",
+                                        arguments?.getInt("ID_TICKET")!!,
+                                        UpdateTicketBody(
+                                            departureTime = "${departure_time}",
+                                            arrivalTime = "${arrival_time}",
+                                            returnTime = null,
+                                            arrival2Time = null,
+                                            price = price,
+                                            category = choosenCategory,
+                                            origin = originPlace,
+                                            destination = directionPlace,
+
+                                            )
+                                    ).collect {
+
+                                        it.onSuccess { response ->
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Success to Update Ticket",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
+                                        }
+                                        it.onFailure { responseFailure ->
+                                            Toast.makeText(
+                                                requireContext(),
+                                                responseFailure.message.toString(),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        } else {
+                            lifecycleScope.launchWhenResumed {
+                                if (job.isActive) job.cancel()
+                                job = launch {
+                                    viewModel.updateTicket(
+                                        "Bearer $it",
+                                        arguments?.getInt("ID_TICKET")!!,
+                                        UpdateTicketBody(
+                                            departureTime = "${departure_time}",
+                                            arrivalTime = "${arrival_time}",
+                                            returnTime = "${return_time}",
+                                            arrival2Time = "${arrival2_time}",
+                                            price = price,
+                                            category = choosenCategory,
+                                            origin = originPlace,
+                                            destination = directionPlace,
+
+                                            )
+                                    ).collect {
+
+                                        it.onSuccess { response ->
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Success to Update Ticket",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
+                                        }
+                                        it.onFailure { responseFailure ->
+                                            Toast.makeText(
+                                                requireContext(),
+                                                responseFailure.message.toString(),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+
+                    }
+
+                } else {
+                    // set error
+                    binding.tilTo.setError("Origin and direction couldn't be same!")
+                    binding.tilTo.requestFocus()
+                }
+            }
+
+        }
 
         binding.btnDeleteEdit.setOnClickListener {
             viewModel.getToken().observe(viewLifecycleOwner) {
