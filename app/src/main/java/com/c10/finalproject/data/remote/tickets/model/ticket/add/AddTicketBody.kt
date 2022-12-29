@@ -1,4 +1,4 @@
-package com.c10.finalproject.data.remote.tickets.model
+package com.c10.finalproject.data.remote.tickets.model.ticket.add
 
 import com.google.gson.annotations.SerializedName
 

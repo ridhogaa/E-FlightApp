@@ -60,6 +60,9 @@
         tools:layout="@layout/fragment_edit_ticket"
         android:label="Edit Ticket">
 
+        <action
+            android:id="@+id/action_editTicketAdminFragment_to_homeFragmentAdmin"
+            app:destination="@id/homeFragmentAdmin" />
     </fragment>
 
 </navigation>

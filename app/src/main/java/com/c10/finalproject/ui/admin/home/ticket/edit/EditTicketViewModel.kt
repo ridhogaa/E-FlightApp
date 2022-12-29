@@ -1,10 +1,9 @@
 package com.c10.finalproject.ui.admin.home.ticket.edit
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.c10.finalproject.data.local.datastore.DataStoreManager
 import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
 import com.c10.finalproject.data.repository.TicketRepository
 import com.c10.finalproject.wrapper.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +12,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditTicketViewModel @Inject constructor(private val ticketRepository: TicketRepository) :
+class EditTicketViewModel @Inject constructor(
+    private val ticketRepository: TicketRepository,
+    private val dataStoreManager: DataStoreManager
+) :
     ViewModel() {
 
     // TODO: Implement the ViewModel
@@ -42,6 +44,8 @@ class EditTicketViewModel @Inject constructor(private val ticketRepository: Tick
         }
     }
 
+    fun getToken() = dataStoreManager.getToken.asLiveData()
+
     fun getDetail(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val data = ticketRepository.getTicketById(id)
@@ -51,7 +55,10 @@ class EditTicketViewModel @Inject constructor(private val ticketRepository: Tick
         }
     }
 
-    fun updateTicket(token: String, id: Int) =
-        viewModelScope.launch(Dispatchers.IO) { ticketRepository.updateTicket(token, id) }
+    suspend fun updateTicket(token: String, id: Int, updateTicketBody: UpdateTicketBody) =
+        ticketRepository.updateTicket(token, id, updateTicketBody)
+
+    suspend fun deleteTicket(token: String, id: Int) =
+        ticketRepository.deleteTicket(token, id)
 
 }

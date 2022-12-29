@@ -2,6 +2,10 @@ package com.c10.finalproject.data.remote.tickets.datasource
 
 import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
 import com.c10.finalproject.data.remote.tickets.model.*
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.delete.DeleteTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -13,9 +17,12 @@ import javax.inject.Inject
 interface TicketRemoteDataSource {
     suspend fun getTickets(): GetTicketResponse
     suspend fun getTicketById(id: Int): GetTicketByIdResponse
-    suspend fun updateTicket(token: String, id: Int): UpdateTicketResponse
 
     suspend fun addTicket(token: String, addTicketBody: AddTicketBody): Response<AddTicketResponse>
+
+    suspend fun updateTicket(token: String, id: Int, updateTicketBody: UpdateTicketBody): Response<UpdateTicketResponse>
+
+    suspend fun deleteTicket(token: String, id: Int): Response<DeleteTicketResponse>
 
 }
 
@@ -26,10 +33,14 @@ class TicketRemoteDataSourceImpl @Inject constructor(private val apiServiceTicke
     override suspend fun getTicketById(id: Int): GetTicketByIdResponse =
         apiServiceTicket.getTicketById(id)
 
-    override suspend fun updateTicket(token: String, id: Int): UpdateTicketResponse =
-        apiServiceTicket.updateTicket(token, id)
-
     override suspend fun addTicket(token: String, addTicketBody: AddTicketBody): Response<AddTicketResponse> =
         apiServiceTicket.addTicket(token, addTicketBody)
+
+    override suspend fun updateTicket(token: String, id: Int, updateTicketBody: UpdateTicketBody): Response<UpdateTicketResponse> =
+        apiServiceTicket.updateTicket(token, id, updateTicketBody)
+
+    override suspend fun deleteTicket(token: String, id: Int): Response<DeleteTicketResponse> =
+        apiServiceTicket.deleteTicket(token, id)
+
 
 }

@@ -1,8 +1,8 @@
-package com.c10.finalproject.data.remote.tickets.model
+package com.c10.finalproject.data.remote.tickets.model.ticket.update
 
 import com.google.gson.annotations.SerializedName
 
-data class AddTicketResponse (
+data class UpdateTicketResponse (
     @SerializedName("id")
     val id: Int?,
     @SerializedName("airplane_name")

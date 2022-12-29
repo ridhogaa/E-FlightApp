@@ -2,7 +2,7 @@ package com.c10.finalproject.ui.admin.flight
 
 import androidx.lifecycle.*
 import com.c10.finalproject.data.local.datastore.DataStoreManager
-import com.c10.finalproject.data.remote.tickets.model.AddTicketBody
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
 import com.c10.finalproject.data.repository.TicketRepository
 import com.c10.finalproject.wrapper.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

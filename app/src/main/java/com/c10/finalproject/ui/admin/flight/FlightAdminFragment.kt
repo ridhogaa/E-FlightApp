@@ -21,7 +21,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.tickets.model.AddTicketBody
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
 import com.c10.finalproject.databinding.FragmentAdminFlightBinding
 import com.c10.finalproject.wrapper.Resource
 import com.google.android.material.textfield.TextInputEditText

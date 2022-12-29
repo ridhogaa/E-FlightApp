@@ -1,10 +1,13 @@
 package com.c10.finalproject.data.repository
 
-import com.c10.finalproject.data.remote.auth.model.RegisterResponse
 import com.c10.finalproject.data.remote.auth.model.ResponseError
 import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
 import com.c10.finalproject.data.remote.tickets.datasource.TicketRemoteDataSource
 import com.c10.finalproject.data.remote.tickets.model.*
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.delete.DeleteTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
 import com.c10.finalproject.wrapper.Resource
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +28,16 @@ interface TicketRepository {
         addTicketBody: AddTicketBody
     ): Flow<Result<AddTicketResponse>>
 
-    suspend fun updateTicket(token: String, id: Int): Resource<UpdateTicketResponse>
+    suspend fun updateTicket(
+        token: String,
+        id: Int,
+        updateTicketBody: UpdateTicketBody
+    ): Flow<Result<UpdateTicketResponse>>
+
+    suspend fun deleteTicket(
+        token: String,
+        id: Int
+    ): Flow<Result<DeleteTicketResponse>>
 
 }
 
@@ -65,11 +77,6 @@ class TicketRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateTicket(token: String, id: Int): Resource<UpdateTicketResponse> =
-        proceed {
-            dataSource.updateTicket(token, id)
-        }
-
     @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun addTicket(
         token: String,
@@ -93,6 +100,53 @@ class TicketRepositoryImpl @Inject constructor(
             }
         }
 
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    override suspend fun updateTicket(
+        token: String,
+        id: Int,
+        updateTicketBody: UpdateTicketBody
+    ): Flow<Result<UpdateTicketResponse>> =
+        flow {
+            try {
+                val response = apiServiceTicket.updateTicket(token, id, updateTicketBody)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        emit(Result.success(it))
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(response.errorBody()?.string(), ResponseError::class.java)
+                    emit(Result.failure(Throwable(error.error?.message)))
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+                emit(Result.failure(exception))
+            }
+        }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    override suspend fun deleteTicket(
+        token: String,
+        id: Int
+    ): Flow<Result<DeleteTicketResponse>> =
+        flow {
+            try {
+                val response = apiServiceTicket.deleteTicket(token, id)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        emit(Result.success(it))
+                    }
+                } else {
+                    val error =
+                        Gson().fromJson(response.errorBody()?.string(), ResponseError::class.java)
+                    emit(Result.failure(Throwable(error.error?.message)))
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+                emit(Result.failure(exception))
+            }
+        }
 
     private suspend fun <T> proceed(coroutines: suspend () -> T): Resource<T> {
         return try {
