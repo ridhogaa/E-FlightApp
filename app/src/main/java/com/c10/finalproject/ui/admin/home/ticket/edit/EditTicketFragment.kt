@@ -360,7 +360,7 @@ class EditTicketFragment : Fragment() {
                 etTimeDepartureFlight.setText(it.departureTime?.substring(11, 16))
                 etTimeLandingFlight.setText(it.arrivalTime?.substring(11, 16))
                 etTypeFlight.setText(it.category)
-                etPriceFlight.setText(Utils.formatRupiah(it.price!!))
+                etPriceFlight.setText(it.price!!.toString().trim())
                 etDepartureDateFlight.setText(it.departureTime?.substring(0, 10))
                 if (it.category.equals("one_way", true)) {
                     tilReturnDateFlight.visibility = View.GONE
