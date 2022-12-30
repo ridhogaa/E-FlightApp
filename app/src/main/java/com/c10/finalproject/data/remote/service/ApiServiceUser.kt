@@ -14,6 +14,6 @@ interface ApiServiceUser {
     @GET("api/auth/user")
     suspend fun getUserByToken(@Header("Authorization") token: String): GetUserResponse
 
-    @PUT("api/v1/user/update/{id}")
+    @PUT("api/v1/users/update/{id}")
     suspend fun updateUserById(@Path("id") id: Int, @Body bodyUpdateUser: BodyUpdateUser)
 }
