@@ -13,11 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            tools:src="@drawable/logo"/>
-
         <TextView
             android:id="@+id/tv_username_item_trans"
             android:layout_width="wrap_content"
@@ -55,6 +50,7 @@
         android:id="@+id/cv_item_trans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="16dp"
         app:strokeColor="@color/black"
         app:strokeWidth="1dp">
@@ -151,22 +147,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_landing_time_item_trans" />
 
             <TextView
-                android:id="@+id/tv_class_item_trans"
-                style="@style/TextView16BlackMedium"
-                android:layout_marginTop="16dp"
-                android:text="ECONOMY CLASS"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-            <TextView
                 android:id="@+id/tv_total_item_trans"
                 style="@style/TextView16BlackMedium"
                 android:layout_marginTop="8dp"
                 android:text="Rp. 3000.000.00"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_class_item_trans" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <Button
                 android:id="@+id/btn_todetail_item_trans"

@@ -38,20 +38,16 @@ class HomeAdminFragment : Fragment() {
             when (it) {
                 is Resource.Loading -> {
                     setLoadingState(true)
-                    binding.emptyState.visibility = View.GONE
                 }
                 is Resource.Error -> {
                     setLoadingState(true)
-                    binding.emptyState.visibility = View.GONE
                 }
                 is Resource.Success -> {
                     setLoadingState(false)
-                    binding.emptyState.visibility = View.GONE
                     setHomeRecyclerView(it.payload)
                 }
                 else -> {
                     setLoadingState(true)
-                    binding.emptyState.visibility = View.VISIBLE
                 }
             }
         }
@@ -70,6 +66,11 @@ class HomeAdminFragment : Fragment() {
     private fun setLoadingState(isLoading: Boolean) {
         binding.pbHomeAdminList.isVisible = isLoading
         binding.rvListFlight.isVisible = !isLoading
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observeData()
     }
 
     override fun onDestroy() {

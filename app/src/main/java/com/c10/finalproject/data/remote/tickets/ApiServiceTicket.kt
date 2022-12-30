@@ -1,6 +1,8 @@
 package com.c10.finalproject.data.remote.tickets
 
 import com.c10.finalproject.data.remote.tickets.model.*
+import com.c10.finalproject.data.remote.tickets.model.histories.GetHistoriesResponse
+import com.c10.finalproject.data.remote.tickets.model.histories.GetUsersResponse
 import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
 import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketResponse
 import com.c10.finalproject.data.remote.tickets.model.ticket.delete.DeleteTicketResponse
@@ -47,6 +49,12 @@ interface ApiServiceTicket {
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Response<DeleteTicketResponse>
+
+    @GET("api/v1/histories")
+    suspend fun getHistories(): GetHistoriesResponse
+
+    @GET("api/v1/users")
+    suspend fun getUsers(): GetUsersResponse
 
 
 
