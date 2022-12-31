@@ -63,16 +63,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun observe() {
+        viewModel.getTickets()
         viewModel.user.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
-                    setLoadingState(true)
+                    binding.pbHome.isVisible = true
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    setLoadingState(true)
+                    binding.pbHome.isVisible = false
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
-                    setLoadingState(false)
+                    binding.pbHome.isVisible = false
+                    binding.stateError.isVisible = false
+                    binding.constraintLayout.isVisible = true
                     binding.apply {
                         tvHello.text = "Hello, ${it.data.data?.name}"
                         it.data.data?.photoProfile?.let { it1 -> isImageEmpty(it1) }
@@ -86,13 +93,19 @@ class HomeFragment : Fragment() {
         viewModel.ticket.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
-                    setLoadingState(true)
+                    binding.pbHome.isVisible = true
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    setLoadingState(true)
+                    binding.pbHome.isVisible = false
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
-                    setLoadingState(false)
+                    binding.pbHome.isVisible = false
+                    binding.stateError.isVisible = false
+                    binding.constraintLayout.isVisible = true
                     val adapter = ArrayAdapter(requireContext(), R.layout.list_textview, it.data)
                     swapOnClick(adapter)
                     (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)
@@ -126,11 +139,6 @@ class HomeFragment : Fragment() {
             (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)
             (binding.etTo as? AutoCompleteTextView)?.setAdapter(adapter)
         }
-    }
-
-    private fun setLoadingState(isLoading: Boolean) {
-        binding.pbHome.isVisible = isLoading
-        binding.constraintLayout.isVisible = !isLoading
     }
 
     private fun buttonSearchOnClick() {

@@ -28,26 +28,37 @@ class HistoryViewModel @Inject constructor(
 
     fun getOrder(userId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _history.postValue(Resource.Loading())
-        val order = orderRepository.getOrders()
-        val orderList = mutableListOf<DataOrder>()
-        val ticketList = mutableListOf<DataTicket>()
-        order.payload?.forEach {
-            if (it.userId.toString().equals(userId.toString(), false)) {
-                orderList.add(it)
-                ticketList.add(ticketRepository.getTicketById(it.ticketId!!).payload!!.data!!)
+        try {
+            val order = orderRepository.getOrders()
+            val orderList = mutableListOf<DataOrder>()
+            val ticketList = mutableListOf<DataTicket>()
+            if (order.payload != null) {
+                order.payload.forEach {
+                    if (it.userId.toString().equals(userId.toString(), false)) {
+                        orderList.add(it)
+                        ticketList.add(ticketRepository.getTicketById(it.ticketId!!).payload!!.data!!)
+                    } else {
+                        orderList.clear()
+                        ticketList.clear()
+                    }
+                }
+                if (orderList.size > 0) {
+                    viewModelScope.launch(Dispatchers.Main) {
+                        _history.postValue(Resource.Success(orderList))
+                        _ticket.postValue(ticketList)
+                    }
+                } else {
+                    _history.postValue(Resource.Empty())
+                }
             } else {
-                orderList.clear()
-                ticketList.clear()
+                _history.postValue(Resource.Error(order.exception, null))
             }
-        }
-        if (orderList.size > 0) {
+        } catch (e: Exception) {
             viewModelScope.launch(Dispatchers.Main) {
-                _history.postValue(Resource.Success(orderList))
-                _ticket.postValue(ticketList)
+                _history.postValue(Resource.Error(e, null))
             }
-        } else {
-            _history.postValue(Resource.Empty())
         }
+
     }
 
     fun getToken(): LiveData<String> = dataStoreManager.getToken.asLiveData()

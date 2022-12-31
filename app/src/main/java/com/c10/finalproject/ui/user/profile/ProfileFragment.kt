@@ -27,6 +27,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -92,19 +93,23 @@ class ProfileFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
-                    //setLoadingState(true)
+                    binding.pbProfileList.isVisible = true
+                    binding.stateError.isVisible = false
+                    binding.constraintLayout.isVisible = false
                 }
                 is Resource.Error -> {
-                    //setLoadingState(true)
+                    binding.pbProfileList.isVisible = false
+                    binding.stateError.isVisible = true
+                    binding.constraintLayout.isVisible = false
                 }
                 is Resource.Success -> {
-                    //setLoadingState(false)
+                    binding.pbProfileList.isVisible = false
+                    binding.stateError.isVisible = false
+                    binding.constraintLayout.isVisible = true
                     setView(it.payload!!)
                     binding.btnUpdate.setOnClickListener { _ -> toUpdateAccount(it.payload) }
                 }
-                else -> {
-
-                }
+                else -> {}
             }
         }
     }
@@ -113,7 +118,7 @@ class ProfileFragment : Fragment() {
         binding.apply {
             etCardNumber.setText(getUserResponse.data?.noKtp ?: "")
             etUsername.setText(getUserResponse.data?.username ?: "")
-            tvEmail.text = getUserResponse.data?.email ?: ""
+            tvEmail.text = ("Email: " + getUserResponse.data?.email) ?: ""
             etName.setText(getUserResponse.data?.name ?: "")
             etContact.setText(getUserResponse.data?.contact ?: "")
             etBirthday.setText(getUserResponse.data?.dateOfBirth?.substring(0, 10) ?: "")

@@ -31,27 +31,38 @@ class NotificationViewModel @Inject constructor(
 
     fun getNotifications(userId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _notification.postValue(Resource.Loading())
-        val notif = notificationRepository.getNotifications()
-        val notifList = mutableListOf<DataNotification>()
-        val ticketList = mutableListOf<DataTicket>()
-        val order = orderRepository.getOrders().payload
-        notif.payload?.forEachIndexed { index, it ->
-            if (it.userId == userId && it.orderId == order!![index].id) {
-                notifList.add(it)
-                ticketList.add(ticketRepository.getTicketById(order[index].ticketId!!).payload!!.data!!)
+        try {
+            val notif = notificationRepository.getNotifications()
+            val notifList = mutableListOf<DataNotification>()
+            val ticketList = mutableListOf<DataTicket>()
+            val order = orderRepository.getOrders().payload
+            if (notif.payload != null || order != null) {
+                notif.payload?.forEachIndexed { index, it ->
+                    if (it.userId == userId && it.orderId == order!![index].id) {
+                        notifList.add(it)
+                        ticketList.add(ticketRepository.getTicketById(order[index].ticketId!!).payload!!.data!!)
+                    } else {
+                        notifList.clear()
+                        ticketList.clear()
+                    }
+                }
+                if (notifList.size > 0) {
+                    viewModelScope.launch(Dispatchers.Main) {
+                        _notification.postValue(Resource.Success(notifList))
+                        _ticket.postValue(ticketList)
+                    }
+                } else {
+                    _notification.postValue(Resource.Empty())
+                }
             } else {
-                notifList.clear()
-                ticketList.clear()
+                _notification.postValue(Resource.Error(notif.exception, null))
             }
-        }
-        if (notifList.size > 0) {
+        } catch (e: Exception) {
             viewModelScope.launch(Dispatchers.Main) {
-                _notification.postValue(Resource.Success(notifList))
-                _ticket.postValue(ticketList)
+                _notification.postValue(Resource.Error(e, null))
             }
-        } else {
-            _notification.postValue(Resource.Empty())
         }
+
     }
 
     fun getToken(): LiveData<String> = dataStoreManager.getToken.asLiveData()

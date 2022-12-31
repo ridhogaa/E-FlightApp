@@ -24,28 +24,46 @@ class HomeViewModel @Inject constructor(
     private val _ticket = MutableLiveData<Resource<List<String>>>()
     val ticket: LiveData<Resource<List<String>>> get() = _ticket
 
-    init {
-        getTickets()
-    }
-
     fun getUserByToken(token: String) = viewModelScope.launch(Dispatchers.IO) {
         _user.postValue(Resource.Loading())
-        val data = userRepository.getUserByToken(token)
-        viewModelScope.launch(Dispatchers.Main) {
-            _user.postValue(Resource.Success(data.payload!!))
+        try {
+            val data = userRepository.getUserByToken(token)
+            viewModelScope.launch(Dispatchers.Main) {
+                if (data.payload == null) {
+                    _user.postValue(Resource.Error(data.exception, null))
+                } else {
+                    _user.postValue(Resource.Success(data.payload))
+                }
+            }
+        } catch (e: Exception) {
+            viewModelScope.launch(Dispatchers.Main) {
+                _user.postValue(Resource.Error(e, null))
+            }
         }
+
     }
 
-    private fun getTickets() = viewModelScope.launch(Dispatchers.IO) {
+    fun getTickets() = viewModelScope.launch(Dispatchers.IO) {
         _ticket.postValue(Resource.Loading())
-        val ticket = ticketRepository.getTickets()
-        val ticketList = mutableListOf<String>()
-        ticket.payload?.forEach {
-            ticketList.add(it.origin.toString())
+        try {
+            val ticket = ticketRepository.getTickets()
+            val ticketList = mutableListOf<String>()
+            if (ticket.payload != null) {
+                ticket.payload.forEach {
+                    ticketList.add(it.origin.toString())
+                }
+                viewModelScope.launch(Dispatchers.Main) {
+                    _ticket.postValue(Resource.Success(ticketList.distinct()))
+                }
+            } else {
+                _ticket.postValue(Resource.Error(ticket.exception, null))
+            }
+        } catch (e: Exception) {
+            viewModelScope.launch(Dispatchers.Main) {
+                _ticket.postValue(Resource.Error(e, null))
+            }
         }
-        viewModelScope.launch(Dispatchers.Main) {
-            _ticket.postValue(Resource.Success(ticketList.distinct()))
-        }
+
     }
 
     fun getToken(): LiveData<String> = dataStoreManager.getToken.asLiveData()

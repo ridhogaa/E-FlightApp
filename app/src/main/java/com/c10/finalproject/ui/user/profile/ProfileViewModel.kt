@@ -25,10 +25,22 @@ class ProfileViewModel @Inject constructor(
     private val _photo = MutableLiveData<String>()
     val photo: LiveData<String> get() = _photo
 
-    fun getUserByToken(token: String) = viewModelScope.launch(Dispatchers.Main) {
+    fun getUserByToken(token: String) = viewModelScope.launch(Dispatchers.IO) {
         _user.postValue(Resource.Loading())
-        val data = userRepository.getUserByToken(token)
-        _user.postValue(Resource.Success(data.payload!!))
+        try {
+            val data = userRepository.getUserByToken(token)
+            viewModelScope.launch(Dispatchers.Main) {
+                if (data.payload != null) {
+                    _user.postValue(Resource.Success(data.payload))
+                } else {
+                    _user.postValue(Resource.Error(data.exception, null))
+                }
+            }
+        } catch (e: Exception) {
+            viewModelScope.launch(Dispatchers.Main) {
+                _user.postValue(Resource.Error(e, null))
+            }
+        }
     }
 
     fun addPhoto(image: String) = _photo.postValue(image)

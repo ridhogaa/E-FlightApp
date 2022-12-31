@@ -106,15 +106,20 @@ class FlightDetailsFragment : Fragment() {
         viewModel.detailResult.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
-                    setLoadingState(true)
+                    binding.pbDetailList.isVisible = true
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    setLoadingState(true)
+                    binding.pbDetailList.isVisible = false
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
-                    setLoadingState(false)
+                    binding.pbDetailList.isVisible = false
+                    binding.constraintLayout.isVisible = true
+                    binding.stateError.isVisible = false
                     setView(it.payload)
-
                     checkFav(it.payload?.data?.id!!, userId)
                     wishlist = WishlistEntity(
                         ticketId = it.payload.data.id,
@@ -158,11 +163,6 @@ class FlightDetailsFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun setLoadingState(isLoading: Boolean) {
-        binding.pbDetailList.isVisible = isLoading
-        binding.constraintLayout.isVisible = !isLoading
     }
 
     override fun onDestroy() {

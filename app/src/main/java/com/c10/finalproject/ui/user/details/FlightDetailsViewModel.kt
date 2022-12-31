@@ -44,9 +44,19 @@ class FlightDetailsViewModel @Inject constructor(
     fun getDetail(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _detailResult.postValue(Resource.Loading())
-            val data = ticketRepository.getTicketById(id)
-            viewModelScope.launch(Dispatchers.Main) {
-                _detailResult.postValue(Resource.Success(data.payload!!))
+            try {
+                val data = ticketRepository.getTicketById(id)
+                if (data.payload != null) {
+                    viewModelScope.launch(Dispatchers.Main) {
+                        _detailResult.postValue(Resource.Success(data.payload))
+                    }
+                } else {
+                    _detailResult.postValue(Resource.Error(data.exception, null))
+                }
+            } catch (e: Exception) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    _detailResult.postValue(Resource.Error(e, null))
+                }
             }
         }
     }

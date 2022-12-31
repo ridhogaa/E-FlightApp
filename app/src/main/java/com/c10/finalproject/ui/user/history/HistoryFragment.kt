@@ -50,16 +50,19 @@ class HistoryFragment : Fragment() {
                     binding.pbHistoryList.isVisible = true
                     binding.rvHistory.isVisible = false
                     binding.emptyState.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    binding.pbHistoryList.isVisible = true
+                    binding.pbHistoryList.isVisible = false
                     binding.rvHistory.isVisible = false
                     binding.emptyState.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
                     binding.pbHistoryList.isVisible = false
                     binding.emptyState.isVisible = false
                     binding.rvHistory.isVisible = true
+                    binding.stateError.isVisible = false
                     viewModel.ticket.observe(viewLifecycleOwner) { list ->
                         binding.rvHistory.adapter = HistoryAdapter(list)
                     }
@@ -68,6 +71,7 @@ class HistoryFragment : Fragment() {
                     binding.pbHistoryList.isVisible = false
                     binding.rvHistory.isVisible = false
                     binding.emptyState.isVisible = true
+                    binding.stateError.isVisible = false
                 }
             }
         }

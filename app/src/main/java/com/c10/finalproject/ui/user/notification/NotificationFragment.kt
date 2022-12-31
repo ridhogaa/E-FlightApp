@@ -54,16 +54,19 @@ class NotificationFragment : Fragment() {
                     binding.pbNotificationList.isVisible = true
                     binding.rvNotification.isVisible = false
                     binding.emptyState.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    binding.pbNotificationList.isVisible = true
+                    binding.pbNotificationList.isVisible = false
                     binding.rvNotification.isVisible = false
                     binding.emptyState.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
                     binding.pbNotificationList.isVisible = false
                     binding.emptyState.isVisible = false
                     binding.rvNotification.isVisible = true
+                    binding.stateError.isVisible = false
                     viewModel.ticket.observe(viewLifecycleOwner) { list ->
                         binding.rvNotification.adapter = NotificationAdapter(it.data, list)
                     }
@@ -72,6 +75,7 @@ class NotificationFragment : Fragment() {
                     binding.pbNotificationList.isVisible = false
                     binding.rvNotification.isVisible = false
                     binding.emptyState.isVisible = true
+                    binding.stateError.isVisible = false
                 }
             }
         }
