@@ -47,6 +47,8 @@ class TransactionAdminFragment : Fragment() {
                 }
                 else -> {
                     setLoadingState(true)
+                    binding.transactionEmptyState.visibility = View.VISIBLE
+
                 }
             }
         }

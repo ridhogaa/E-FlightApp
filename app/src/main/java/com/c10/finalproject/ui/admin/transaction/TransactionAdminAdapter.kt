@@ -1,10 +1,13 @@
 package com.c10.finalproject.ui.admin.transaction
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.databinding.ItemListTransactionBinding
 import com.c10.finalproject.utils.Utils
@@ -52,6 +55,13 @@ class TransactionAdminAdapter: RecyclerView.Adapter<TransactionAdminAdapter.Tran
                 tvTypeItemTrans.text = data.category
                 tvDepartureTimeItemTrans.text = data.departureTime?.substring(11, 16)
                 tvLandingTimeItemTrans.text = data.arrivalTime?.substring(11, 16)
+
+                btnTodetailItemTrans.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putInt("ID_TICKET", data.id!!)
+                    it.findNavController()
+                        .navigate(R.id.action_transactionFragmentAdmin_to_detailFragmentAdmin, bundle)
+                }
             }
         }
     }

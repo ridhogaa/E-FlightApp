@@ -29,9 +29,8 @@
         android:name="com.c10.finalproject.ui.admin.transaction.TransactionAdminFragment"
         tools:layout="@layout/fragment_admin_transaction"
         android:label="Transaction">
-
         <action
-            android:id="@+id/action_transactionFragment_to_DetailFragment"
+            android:id="@+id/action_transactionFragmentAdmin_to_detailFragmentAdmin"
             app:destination="@id/detailFragmentAdmin" />
     </fragment>
 
