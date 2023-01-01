@@ -1,5 +1,6 @@
 package com.c10.finalproject.ui.admin.home.ticket.edit
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.util.Calendar
@@ -108,96 +109,112 @@ class EditTicketFragment : Fragment() {
                 if (originPlace != directionPlace) {
                     // do post method
 
-                    viewModel.getToken().observe(viewLifecycleOwner) {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle("Message Dialog")
+                    builder.setMessage(
+                        "Are you sure to update this ticket?"
+                    )
 
-                        // do post method
+                    builder.setPositiveButton(android.R.string.yes) { dialog, which ->
 
-                        if (choosenCategory.equals("one_way")) {
+                        viewModel.getToken().observe(viewLifecycleOwner) {
 
-                            lifecycleScope.launchWhenResumed {
-                                if (job.isActive) job.cancel()
-                                job = launch {
-                                    viewModel.updateTicket(
-                                        it,
-                                        arguments?.getInt("ID_TICKET")!!,
-                                        UpdateTicketBody(
-                                            departureTime = "${departure_time}",
-                                            arrivalTime = "${arrival_time}",
-                                            returnTime = null,
-                                            arrival2Time = null,
-                                            price = price,
-                                            category = choosenCategory,
-                                            origin = originPlace,
-                                            destination = directionPlace,
+                            // do post method
 
-                                            )
-                                    ).collect {
+                            if (choosenCategory.equals("one_way")) {
 
-                                        it.onSuccess { response ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Success to Update Ticket",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
-                                        }
-                                        it.onFailure { responseFailure ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                responseFailure.message.toString(),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                lifecycleScope.launchWhenResumed {
+                                    if (job.isActive) job.cancel()
+                                    job = launch {
+                                        viewModel.updateTicket(
+                                            it,
+                                            arguments?.getInt("ID_TICKET")!!,
+                                            UpdateTicketBody(
+                                                departureTime = "${departure_time}",
+                                                arrivalTime = "${arrival_time}",
+                                                returnTime = null,
+                                                arrival2Time = null,
+                                                price = price,
+                                                category = choosenCategory,
+                                                origin = originPlace,
+                                                destination = directionPlace,
 
-                                        }
-                                    }
-                                }
-                            }
+                                                )
+                                        ).collect {
 
+                                            it.onSuccess { response ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Success to Update Ticket",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
+                                            }
+                                            it.onFailure { responseFailure ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    responseFailure.message.toString(),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
 
-                        } else {
-                            lifecycleScope.launchWhenResumed {
-                                if (job.isActive) job.cancel()
-                                job = launch {
-                                    viewModel.updateTicket(
-                                        it,
-                                        arguments?.getInt("ID_TICKET")!!,
-                                        UpdateTicketBody(
-                                            departureTime = "${departure_time}",
-                                            arrivalTime = "${arrival_time}",
-                                            returnTime = "${return_time}",
-                                            arrival2Time = "${arrival2_time}",
-                                            price = price,
-                                            category = choosenCategory,
-                                            origin = originPlace,
-                                            destination = directionPlace,
-
-                                            )
-                                    ).collect {
-
-                                        it.onSuccess { response ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Success to Update Ticket",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
-                                        }
-                                        it.onFailure { responseFailure ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                responseFailure.message.toString(),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-
+                                            }
                                         }
                                     }
                                 }
+
+
+                            } else {
+                                lifecycleScope.launchWhenResumed {
+                                    if (job.isActive) job.cancel()
+                                    job = launch {
+                                        viewModel.updateTicket(
+                                            it,
+                                            arguments?.getInt("ID_TICKET")!!,
+                                            UpdateTicketBody(
+                                                departureTime = "${departure_time}",
+                                                arrivalTime = "${arrival_time}",
+                                                returnTime = "${return_time}",
+                                                arrival2Time = "${arrival2_time}",
+                                                price = price,
+                                                category = choosenCategory,
+                                                origin = originPlace,
+                                                destination = directionPlace,
+
+                                                )
+                                        ).collect {
+
+                                            it.onSuccess { response ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Success to Update Ticket",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
+                                            }
+                                            it.onFailure { responseFailure ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    responseFailure.message.toString(),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                            }
+                                        }
+                                    }
+                                }
+
                             }
+
 
                         }
 
+                    }
+
+                    builder.setNegativeButton(android.R.string.no) { dialog, which ->
 
                     }
+                    builder.show()
+
 
                 } else {
                     // set error
@@ -209,37 +226,52 @@ class EditTicketFragment : Fragment() {
         }
 
         binding.btnDeleteEdit.setOnClickListener {
-            viewModel.getToken().observe(viewLifecycleOwner) {
 
-                // do networking method
-                lifecycleScope.launchWhenResumed {
-                    if (job.isActive) job.cancel()
-                    job = launch {
-                        viewModel.deleteTicket(
-                            it,
-                            arguments?.getInt("ID_TICKET")!!,
-                        ).collect {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Message Dialog")
+            builder.setMessage(
+                "Are you sure to delete this ticket?"
+            )
 
-                            it.onSuccess { response ->
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Success to Delete Ticket!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
-                            }
-                            it.onFailure { responseFailure ->
-                                Toast.makeText(
-                                    requireContext(),
-                                    responseFailure.message.toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                viewModel.getToken().observe(viewLifecycleOwner) {
 
+                    // do networking method
+                    lifecycleScope.launchWhenResumed {
+                        if (job.isActive) job.cancel()
+                        job = launch {
+                            viewModel.deleteTicket(
+                                it,
+                                arguments?.getInt("ID_TICKET")!!,
+                            ).collect {
+
+                                it.onSuccess { response ->
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Success to Delete Ticket!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    findNavController().navigate(R.id.action_editTicketAdminFragment_to_homeFragmentAdmin)
+                                }
+                                it.onFailure { responseFailure ->
+                                    Toast.makeText(
+                                        requireContext(),
+                                        responseFailure.message.toString(),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
                             }
                         }
                     }
                 }
             }
+
+            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+
+            }
+            builder.show()
+
         }
     }
 

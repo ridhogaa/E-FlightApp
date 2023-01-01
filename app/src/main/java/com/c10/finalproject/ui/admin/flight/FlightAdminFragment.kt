@@ -1,5 +1,6 @@
 package com.c10.finalproject.ui.admin.flight
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.res.ColorStateList
@@ -22,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
 import com.c10.finalproject.databinding.FragmentAdminFlightBinding
 import com.c10.finalproject.wrapper.Resource
 import com.google.android.material.textfield.TextInputEditText
@@ -109,92 +111,105 @@ class FlightAdminFragment : Fragment() {
                 if (originPlace != directionPlace) {
                     // do post method
 
-                    viewModel.getToken().observe(viewLifecycleOwner) {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle("Message Dialog")
+                    builder.setMessage(
+                        "Are you sure to add this ticket?"
+                    )
 
-                        // do post method
+                    builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                        viewModel.getToken().observe(viewLifecycleOwner) {
 
-                        if (choosenCategory.equals("one_way")) {
+                            // do post method
 
-                            lifecycleScope.launchWhenResumed {
-                                if (job.isActive) job.cancel()
-                                job = launch {
-                                    viewModel.addTicket(
-                                        it,  AddTicketBody(
-                                            departureTime = "${departure_time}",
-                                            arrivalTime = "${arrival_time}",
-                                            returnTime = null,
-                                            arrival2Time = null,
-                                            price = price,
-                                            category = choosenCategory,
-                                            origin = originPlace,
-                                            destination = directionPlace,
+                            if (choosenCategory.equals("one_way")) {
 
-                                            )
-                                    ).collect {
+                                lifecycleScope.launchWhenResumed {
+                                    if (job.isActive) job.cancel()
+                                    job = launch {
+                                        viewModel.addTicket(
+                                            it,  AddTicketBody(
+                                                departureTime = "${departure_time}",
+                                                arrivalTime = "${arrival_time}",
+                                                returnTime = null,
+                                                arrival2Time = null,
+                                                price = price,
+                                                category = choosenCategory,
+                                                origin = originPlace,
+                                                destination = directionPlace,
 
-                                        it.onSuccess { response ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Success to Add Ticket",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            findNavController().navigate(R.id.action_flightFragmentAdmin_to_homeFragmentAdmin)
-                                        }
-                                        it.onFailure { responseFailure ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                responseFailure.message.toString(),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                                )
+                                        ).collect {
 
-                                        }
-                                    }
-                                }
-                            }
+                                            it.onSuccess { response ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Success to Add Ticket",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                findNavController().navigate(R.id.action_flightFragmentAdmin_to_homeFragmentAdmin)
+                                            }
+                                            it.onFailure { responseFailure ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    responseFailure.message.toString(),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
 
-
-                        } else {
-                            lifecycleScope.launchWhenResumed {
-                                if (job.isActive) job.cancel()
-                                job = launch {
-                                    viewModel.addTicket(
-                                        it, AddTicketBody(
-                                            departureTime = "${departure_time}",
-                                            arrivalTime = "${arrival_time}",
-                                            returnTime = "${return_time}",
-                                            arrival2Time = "${arrival2_time}",
-                                            price = price,
-                                            category = choosenCategory,
-                                            origin = originPlace,
-                                            destination = directionPlace,
-
-                                            )
-                                    ).collect {
-
-                                        it.onSuccess { response ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Success to Add Ticket",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            findNavController().navigate(R.id.action_flightFragmentAdmin_to_homeFragmentAdmin)
-                                        }
-                                        it.onFailure { responseFailure ->
-                                            Toast.makeText(
-                                                requireContext(),
-                                                responseFailure.message.toString(),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-
+                                            }
                                         }
                                     }
                                 }
+
+
+                            } else {
+                                lifecycleScope.launchWhenResumed {
+                                    if (job.isActive) job.cancel()
+                                    job = launch {
+                                        viewModel.addTicket(
+                                            it, AddTicketBody(
+                                                departureTime = "${departure_time}",
+                                                arrivalTime = "${arrival_time}",
+                                                returnTime = "${return_time}",
+                                                arrival2Time = "${arrival2_time}",
+                                                price = price,
+                                                category = choosenCategory,
+                                                origin = originPlace,
+                                                destination = directionPlace,
+
+                                                )
+                                        ).collect {
+
+                                            it.onSuccess { response ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Success to Add Ticket",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                findNavController().navigate(R.id.action_flightFragmentAdmin_to_homeFragmentAdmin)
+                                            }
+                                            it.onFailure { responseFailure ->
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    responseFailure.message.toString(),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                            }
+                                        }
+                                    }
+                                }
+
                             }
+
 
                         }
+                    }
 
+                    builder.setNegativeButton(android.R.string.no) { dialog, which ->
 
                     }
+                    builder.show()
 
                 } else {
                     // set error
