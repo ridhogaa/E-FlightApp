@@ -209,13 +209,17 @@ class HomeFragment : Fragment() {
                     { view, year, monthOfYear, dayOfMonth ->
                         if (dayOfMonth in 1..9 && monthOfYear in 1..9) {
                             etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (dayOfMonth in 1..9) {
+                        }
+                        if (dayOfMonth in 1..9) {
                             etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        }
+                        if (monthOfYear in 1..9) {
                             etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
-                        } else {
+                        }
+                        if (dayOfMonth !in 1..9 && monthOfYear !in 1..9) {
                             etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
                         }
+
                     },
                     year,
                     month,

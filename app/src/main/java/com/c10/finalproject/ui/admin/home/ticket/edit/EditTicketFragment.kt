@@ -118,7 +118,7 @@ class EditTicketFragment : Fragment() {
                                 if (job.isActive) job.cancel()
                                 job = launch {
                                     viewModel.updateTicket(
-                                        "Bearer $it",
+                                        it,
                                         arguments?.getInt("ID_TICKET")!!,
                                         UpdateTicketBody(
                                             departureTime = "${departure_time}",
@@ -216,7 +216,7 @@ class EditTicketFragment : Fragment() {
                     if (job.isActive) job.cancel()
                     job = launch {
                         viewModel.deleteTicket(
-                            "Bearer $it",
+                            it,
                             arguments?.getInt("ID_TICKET")!!,
                         ).collect {
 
@@ -320,8 +320,15 @@ class EditTicketFragment : Fragment() {
 
                 val datePickerDialog = DatePickerDialog(
                     requireContext(), { view, year, monthOfYear, dayOfMonth ->
-                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
-                        etDepartureDateFlight.setText(date)
+                        if (dayOfMonth in 1..9 && monthOfYear in 1..9) {
+                            etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (dayOfMonth in 1..9) {
+                            etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (monthOfYear in 1..9) {
+                            etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
+                        } else {
+                            etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
+                        }
                     }, year, month, day
                 )
                 datePickerDialog.show()
@@ -340,8 +347,15 @@ class EditTicketFragment : Fragment() {
 
                 val datePickerDialog = DatePickerDialog(
                     requireContext(), { view, year, monthOfYear, dayOfMonth ->
-                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
-                        etReturnDateFlight.setText(date)
+                        if (dayOfMonth in 1..9 && monthOfYear in 1..9) {
+                            etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (dayOfMonth in 1..9) {
+                            etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (monthOfYear in 1..9) {
+                            etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
+                        } else {
+                            etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
+                        }
                     }, year, month, day
                 )
                 datePickerDialog.show()

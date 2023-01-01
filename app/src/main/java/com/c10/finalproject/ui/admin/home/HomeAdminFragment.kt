@@ -34,6 +34,7 @@ class HomeAdminFragment : Fragment() {
     }
 
     private fun observeData() {
+        viewModel.getHomeAdminTicket()
         viewModel.homeAdminTicket.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
@@ -66,11 +67,6 @@ class HomeAdminFragment : Fragment() {
     private fun setLoadingState(isLoading: Boolean) {
         binding.pbHomeAdminList.isVisible = isLoading
         binding.rvListFlight.isVisible = !isLoading
-    }
-
-    override fun onResume() {
-        super.onResume()
-        observeData()
     }
 
     override fun onDestroy() {

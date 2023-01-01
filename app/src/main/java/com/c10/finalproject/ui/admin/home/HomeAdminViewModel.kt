@@ -21,23 +21,12 @@ class HomeAdminViewModel @Inject constructor(private val ticketRepository: Ticke
     private val _homeAdminTicket = MutableLiveData<Resource<List<Data>>>()
     val homeAdminTicket: LiveData<Resource<List<Data>>> get() = _homeAdminTicket
 
-    init {
-        getHomeAdminTicket()
-    }
-
     fun getHomeAdminTicket() = viewModelScope.launch(Dispatchers.IO) {
         _homeAdminTicket.postValue(Resource.Loading())
-        val ticket = ticketRepository.getTickets()
-        val ticketList = mutableListOf<Data>()
-
-        ticket.payload?.forEach {
-//            ticketList.clear()
-            ticketList.add(it)
-        }
+        val ticket = ticketRepository.getTickets().payload
 
         viewModelScope.launch(Dispatchers.Main) {
-            _homeAdminTicket.postValue(Resource.Success(ticketList))
-
+            _homeAdminTicket.postValue(Resource.Success(ticket!!.sortedBy { it.id }))
         }
     }
 
