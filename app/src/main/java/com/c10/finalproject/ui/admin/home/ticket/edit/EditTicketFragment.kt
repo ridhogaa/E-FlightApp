@@ -159,7 +159,7 @@ class EditTicketFragment : Fragment() {
                                 if (job.isActive) job.cancel()
                                 job = launch {
                                     viewModel.updateTicket(
-                                        "Bearer $it",
+                                        it,
                                         arguments?.getInt("ID_TICKET")!!,
                                         UpdateTicketBody(
                                             departureTime = "${departure_time}",

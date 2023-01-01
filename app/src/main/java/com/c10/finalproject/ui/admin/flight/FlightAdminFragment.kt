@@ -119,7 +119,7 @@ class FlightAdminFragment : Fragment() {
                                 if (job.isActive) job.cancel()
                                 job = launch {
                                     viewModel.addTicket(
-                                        "Bearer $it", AddTicketBody(
+                                        it,  AddTicketBody(
                                             departureTime = "${departure_time}",
                                             arrivalTime = "${arrival_time}",
                                             returnTime = null,
@@ -158,7 +158,7 @@ class FlightAdminFragment : Fragment() {
                                 if (job.isActive) job.cancel()
                                 job = launch {
                                     viewModel.addTicket(
-                                        "Bearer $it", AddTicketBody(
+                                        it, AddTicketBody(
                                             departureTime = "${departure_time}",
                                             arrivalTime = "${arrival_time}",
                                             returnTime = "${return_time}",
