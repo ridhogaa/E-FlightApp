@@ -27,6 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindsOrderRepository(orderRepositoryImpl: OrderRepositoryImpl): OrderRepository
 
     @Binds
+    abstract fun bindsHistoriesRepository(historiesRepositoryImpl: HistoriesRepositoryImpl): HistoriesRepository
+
+
+    @Binds
     abstract fun bindsNotificationRepository(notificationRepository: NotificationRepositoryImpl): NotificationRepository
 
     @Binds

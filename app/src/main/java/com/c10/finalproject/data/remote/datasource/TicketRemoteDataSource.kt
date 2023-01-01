@@ -1,4 +1,4 @@
-package com.c10.finalproject.data.remote.datasource
+package com.c10.finalproject.data.remote.tickets.datasource
 
 import com.c10.finalproject.data.remote.service.ApiServiceTicket
 import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
@@ -13,6 +13,13 @@ import javax.inject.Inject
 interface TicketRemoteDataSource {
     suspend fun getTickets(): GetTicketResponse
     suspend fun getTicketById(id: Int): GetTicketByIdResponse
+
+    suspend fun addTicket(token: String, addTicketBody: AddTicketBody): Response<AddTicketResponse>
+
+    suspend fun updateTicket(token: String, id: Int, updateTicketBody: UpdateTicketBody): Response<UpdateTicketResponse>
+
+    suspend fun deleteTicket(token: String, id: Int): Response<DeleteTicketResponse>
+
 }
 
 class TicketRemoteDataSourceImpl @Inject constructor(private val apiServiceTicket: ApiServiceTicket) :
@@ -21,4 +28,15 @@ class TicketRemoteDataSourceImpl @Inject constructor(private val apiServiceTicke
     override suspend fun getTickets(): GetTicketResponse = apiServiceTicket.getTickets()
     override suspend fun getTicketById(id: Int): GetTicketByIdResponse =
         apiServiceTicket.getTicketById(id)
+
+    override suspend fun addTicket(token: String, addTicketBody: AddTicketBody): Response<AddTicketResponse> =
+        apiServiceTicket.addTicket(token, addTicketBody)
+
+    override suspend fun updateTicket(token: String, id: Int, updateTicketBody: UpdateTicketBody): Response<UpdateTicketResponse> =
+        apiServiceTicket.updateTicket(token, id, updateTicketBody)
+
+    override suspend fun deleteTicket(token: String, id: Int): Response<DeleteTicketResponse> =
+        apiServiceTicket.deleteTicket(token, id)
+
+
 }

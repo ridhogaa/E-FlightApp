@@ -7,24 +7,27 @@
 
     <fragment
         android:id="@+id/homeFragmentAdmin"
-        android:name="com.c10.finalproject.ui.admin.home.HomeFragment"
+        android:name="com.c10.finalproject.ui.admin.home.HomeAdminFragment"
         tools:layout="@layout/fragment_home_admin"
         android:label="Home">
 
         <action
-            android:id="@+id/action_homeFragment_to_transactionFragment"
+            android:id="@+id/action_homeAdminFragment_to_transactionFragment"
             app:destination="@id/transactionFragmentAdmin" />
 
         <action
-            android:id="@+id/action_homeFragment_to_flightFragment"
+            android:id="@+id/action_homeAdminFragment_to_flightFragment"
             app:destination="@id/flightFragmentAdmin" />
 
+        <action
+            android:id="@+id/action_homeFragmentAdmin_to_editTicketAdminFragment"
+            app:destination="@id/editTicketAdminFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/transactionFragmentAdmin"
-        android:name="com.c10.finalproject.ui.admin.transaction.TransactionFragment"
-        tools:layout="@layout/fragment_transaction"
+        android:name="com.c10.finalproject.ui.admin.transaction.TransactionAdminFragment"
+        tools:layout="@layout/fragment_admin_transaction"
         android:label="Transaction">
 
         <action
@@ -34,7 +37,7 @@
 
     <fragment
         android:id="@+id/detailFragmentAdmin"
-        android:name="com.c10.finalproject.ui.admin.detailtransaction.DetailTransactionFragment"
+        android:name="com.c10.finalproject.ui.admin.transaction.detailtransaction.DetailTransactionFragment"
         tools:layout="@layout/fragment_detail_transaction"
         android:label="Detail Transaction">
 
@@ -42,10 +45,24 @@
 
     <fragment
         android:id="@+id/flightFragmentAdmin"
-        android:name="com.c10.finalproject.ui.admin.flight.FlightFragment"
-        tools:layout="@layout/fragment_flight"
+        android:name="com.c10.finalproject.ui.admin.flight.FlightAdminFragment"
+        tools:layout="@layout/fragment_admin_flight"
         android:label="Flight">
 
+        <action
+            android:id="@+id/action_flightFragmentAdmin_to_homeFragmentAdmin"
+            app:destination="@id/homeFragmentAdmin" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editTicketAdminFragment"
+        android:name="com.c10.finalproject.ui.admin.home.ticket.edit.EditTicketFragment"
+        tools:layout="@layout/fragment_edit_ticket"
+        android:label="Edit Ticket">
+
+        <action
+            android:id="@+id/action_editTicketAdminFragment_to_homeFragmentAdmin"
+            app:destination="@id/homeFragmentAdmin" />
     </fragment>
 
 </navigation>

@@ -1,4 +1,4 @@
-package com.c10.finalproject.ui.admin.detailtransaction
+package com.c10.finalproject.ui.admin.transaction.detailtransaction
 
 /**
  * @Author: ridhogymnastiar
