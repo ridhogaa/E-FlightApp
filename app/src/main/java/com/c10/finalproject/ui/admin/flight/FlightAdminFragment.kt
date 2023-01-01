@@ -209,6 +209,9 @@ class FlightAdminFragment : Fragment() {
     }
 
     private fun observeDirection() {
+
+        viewModel.getTickets()
+
         viewModel.ticket.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {

@@ -25,17 +25,13 @@ class FlightAdminViewModel @Inject constructor(
     private val _ticket = MutableLiveData<Resource<List<String>>>()
     val ticket: LiveData<Resource<List<String>>> get() = _ticket
 
-    init {
-        getTickets()
-    }
-
     suspend fun addTicket(token: String, addTicketBody: AddTicketBody) =
         ticketRepository.addTicket(token, addTicketBody)
 
     fun getToken() = dataStoreManager.getToken.asLiveData()
 
 
-    private fun getTickets() = viewModelScope.launch(Dispatchers.IO) {
+    fun getTickets() = viewModelScope.launch(Dispatchers.IO) {
         _ticket.postValue(Resource.Loading())
         val ticket = ticketRepository.getTickets()
         val ticketList = mutableListOf<String>()

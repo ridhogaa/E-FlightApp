@@ -249,11 +249,16 @@ class EditTicketFragment : Fragment() {
     }
 
     private fun observeTickets() {
+        viewModel.getTickets()
+
         viewModel.ticket.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
+                    setLoadingState(true)
+
                 }
                 is Resource.Error -> {
+                    setLoadingState(true)
                 }
                 is Resource.Success -> {
                     val adapter = ArrayAdapter(requireContext(), R.layout.list_textview, it.data)
