@@ -5,8 +5,7 @@ import com.c10.finalproject.data.remote.model.auth.LoginResponse
 import com.c10.finalproject.data.remote.model.auth.RegisterBody
 import com.c10.finalproject.data.remote.model.auth.RegisterResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /**
  * @Author: ridhogymnastiar

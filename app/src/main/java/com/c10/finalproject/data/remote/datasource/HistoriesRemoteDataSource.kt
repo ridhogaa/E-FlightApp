@@ -1,6 +1,6 @@
-package com.c10.finalproject.data.remote.tickets.datasource
+package com.c10.finalproject.data.remote.datasource
 
-import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
+import com.c10.finalproject.data.remote.service.ApiServiceTicket
 import com.c10.finalproject.data.remote.tickets.model.histories.GetHistoriesResponse
 import com.c10.finalproject.data.remote.tickets.model.histories.GetUsersResponse
 import javax.inject.Inject

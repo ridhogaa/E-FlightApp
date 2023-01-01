@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.tickets.model.Data
+import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.databinding.FragmentHomeAdminBinding
 import com.c10.finalproject.wrapper.Resource
 

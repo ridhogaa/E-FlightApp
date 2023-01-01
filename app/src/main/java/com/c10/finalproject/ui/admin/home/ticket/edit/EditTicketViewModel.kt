@@ -2,7 +2,7 @@ package com.c10.finalproject.ui.admin.home.ticket.edit
 
 import androidx.lifecycle.*
 import com.c10.finalproject.data.local.datastore.DataStoreManager
-import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
 import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
 import com.c10.finalproject.data.repository.TicketRepository
 import com.c10.finalproject.wrapper.Resource

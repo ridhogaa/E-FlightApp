@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.c10.finalproject.data.remote.tickets.model.Data
+import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.databinding.ItemListTransactionBinding
 import com.c10.finalproject.utils.Utils
 

@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.c10.finalproject.data.remote.tickets.model.Data
+import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.data.remote.tickets.model.histories.DataUsers
 import com.c10.finalproject.databinding.FragmentAdminTransactionBinding
 import com.c10.finalproject.wrapper.Resource

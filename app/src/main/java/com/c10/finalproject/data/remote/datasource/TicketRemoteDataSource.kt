@@ -3,6 +3,12 @@ package com.c10.finalproject.data.remote.tickets.datasource
 import com.c10.finalproject.data.remote.service.ApiServiceTicket
 import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
 import com.c10.finalproject.data.remote.model.ticket.GetTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
+import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.delete.DeleteTicketResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketResponse
+import retrofit2.Response
 import javax.inject.Inject
 
 /**

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.c10.finalproject.data.remote.tickets.model.Data
+import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.data.repository.TicketRepository
 import com.c10.finalproject.wrapper.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

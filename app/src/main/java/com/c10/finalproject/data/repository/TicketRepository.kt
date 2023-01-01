@@ -1,16 +1,15 @@
 package com.c10.finalproject.data.repository
 
-import com.c10.finalproject.data.remote.auth.model.ResponseError
-import com.c10.finalproject.data.remote.tickets.ApiServiceTicket
+import com.c10.finalproject.data.remote.model.auth.ResponseError
+import com.c10.finalproject.data.remote.model.ticket.Data
+import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.service.ApiServiceTicket
 import com.c10.finalproject.data.remote.tickets.datasource.TicketRemoteDataSource
-import com.c10.finalproject.data.remote.tickets.model.*
 import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketBody
 import com.c10.finalproject.data.remote.tickets.model.ticket.add.AddTicketResponse
 import com.c10.finalproject.data.remote.tickets.model.ticket.delete.DeleteTicketResponse
 import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
-import com.c10.finalproject.data.remote.datasource.TicketRemoteDataSource
-import com.c10.finalproject.data.remote.model.ticket.Data
-import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketResponse
 import com.c10.finalproject.wrapper.Resource
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow

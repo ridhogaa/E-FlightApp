@@ -1,6 +1,6 @@
 package com.c10.finalproject.data.repository
 
-import com.c10.finalproject.data.remote.tickets.datasource.HistoriesRemoteDataSource
+import com.c10.finalproject.data.remote.datasource.HistoriesRemoteDataSource
 import com.c10.finalproject.data.remote.tickets.model.histories.DataHistories
 import com.c10.finalproject.data.remote.tickets.model.histories.DataUsers
 import com.c10.finalproject.wrapper.Resource

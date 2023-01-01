@@ -20,10 +20,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.tickets.model.GetTicketByIdResponse
+import com.c10.finalproject.data.remote.model.ticket.GetTicketByIdResponse
 import com.c10.finalproject.data.remote.tickets.model.ticket.update.UpdateTicketBody
 import com.c10.finalproject.databinding.FragmentEditTicketBinding
-import com.c10.finalproject.utils.Utils
 import com.c10.finalproject.wrapper.Resource
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
