@@ -33,6 +33,9 @@ class TransactionAdminFragment : Fragment() {
     }
 
     private fun observeData() {
+
+        viewModel.getTransactionHistories()
+
         viewModel.ticketResult.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
@@ -53,33 +56,6 @@ class TransactionAdminFragment : Fragment() {
             }
         }
 
-        viewModel.userResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Loading -> {
-                    setLoadingState(true)
-                }
-                is Resource.Error -> {
-                    setLoadingState(true)
-                }
-                is Resource.Success -> {
-                    setLoadingState(false)
-                    setHomeRVUser(it.payload)
-                }
-                else -> {
-                    setLoadingState(true)
-                }
-            }
-        }
-    }
-
-    private fun setHomeRVUser(user: List<DataUsers>?) {
-        val adapter = ShowUserAdapter()
-        adapter.submitList(user)
-
-        binding.apply {
-            rvListTransaction.layoutManager = LinearLayoutManager(requireContext())
-            rvListTransaction.adapter = adapter
-        }
     }
 
     private fun setHomeRecyclerView(ticket: List<Data>?) {

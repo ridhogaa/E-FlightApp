@@ -42,12 +42,7 @@ class TransactionAdminViewModel @Inject constructor(
     val historiesId: LiveData<Resource<List<String>>> get() = _historiesId
 
 
-    init {
-        getHistoriesId()
-        getHistoriesShowUser()
-    }
-
-    private fun getHistoriesId() = viewModelScope.launch(Dispatchers.IO) {
+    fun getTransactionHistories() = viewModelScope.launch(Dispatchers.IO) {
         _historiesId.postValue(Resource.Loading())
         val historiesId = historiesRepository.getHistories()
         val historiesIdList = mutableListOf<String>()
@@ -77,44 +72,6 @@ class TransactionAdminViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.Main) {
             _ticketResult.postValue(Resource.Success(ticketList.distinct()))
-            _historiesId.postValue(Resource.Success(historiesIdList.distinct()))
-
-        }
-
-    }
-
-    private fun getHistoriesShowUser() = viewModelScope.launch(Dispatchers.IO) {
-        _historiesId.postValue(Resource.Loading())
-        val historiesId = historiesRepository.getHistories()
-        val historiesIdList = mutableListOf<String>()
-
-        historiesId.payload?.forEach {
-            historiesIdList.add(it.ticketId.toString())
-        }
-
-        Log.d("LISTTT ID HISTORY222", historiesIdList.toString())
-
-
-        _userResult.postValue(Resource.Loading())
-        val user = historiesRepository.getUsers()
-        val userList = mutableListOf<DataUsers>()
-
-        user.payload?.forEach {
-
-            userList.add(it)
-
-            for (i in historiesIdList.indices) {
-                if (it.id?.equals(historiesIdList[i].toInt()) == true){
-                    userList.add(it)
-                }
-            }
-
-        }
-
-        Log.d("LISTTT USER", userList.toString())
-
-        viewModelScope.launch(Dispatchers.Main) {
-            _userResult.postValue(Resource.Success(userList.distinct()))
             _historiesId.postValue(Resource.Success(historiesIdList.distinct()))
 
         }

@@ -68,7 +68,7 @@ class DetailTransactionFragment : Fragment() {
         gtbir?.data?.let {
             binding.apply {
                 tvFligtCodeDetail.text = it.airplaneName
-                tvTypeDetail.text = it.category
+                tvTypeItemTrans.text = it.category
                 tvFromDetail.text = it.origin
                 tvToDetail.text = it.destination
                 tvDepartureDetail.text = it.departureTime?.substring(11, 16)
