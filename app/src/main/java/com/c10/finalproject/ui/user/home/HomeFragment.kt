@@ -207,19 +207,15 @@ class HomeFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        if (dayOfMonth in 1..9 && monthOfYear in 1..9) {
+                        if (dayOfMonth in 1..9 && monthOfYear in 0..9) {
                             etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        }
-                        if (dayOfMonth in 1..9) {
+                        } else if (dayOfMonth in 1..9) {
                             etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        }
-                        if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 1..9) {
                             etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
-                        }
-                        if (dayOfMonth !in 1..9 && monthOfYear !in 1..9) {
+                        } else {
                             etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
                         }
-
                     },
                     year,
                     month,
@@ -242,7 +238,7 @@ class HomeFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        if (dayOfMonth in 1..9 && monthOfYear in 1..9) {
+                        if (dayOfMonth in 1..9 && monthOfYear in 0..9) {
                             etReturnDate.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etReturnDate.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")

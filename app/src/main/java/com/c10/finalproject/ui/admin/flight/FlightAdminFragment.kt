@@ -128,7 +128,7 @@ class FlightAdminFragment : Fragment() {
                                     if (job.isActive) job.cancel()
                                     job = launch {
                                         viewModel.addTicket(
-                                            it,  AddTicketBody(
+                                            it, AddTicketBody(
                                                 departureTime = "${departure_time}",
                                                 arrivalTime = "${arrival_time}",
                                                 returnTime = null,
@@ -328,8 +328,15 @@ class FlightAdminFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
-                        etDepartureDateFlight.setText(date)
+                        if (dayOfMonth in 1..9 && monthOfYear in 0..9) {
+                            etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (dayOfMonth in 1..9) {
+                            etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (monthOfYear in 1..9) {
+                            etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
+                        } else {
+                            etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
+                        }
                     },
                     year,
                     month,
@@ -352,10 +359,15 @@ class FlightAdminFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
-                        etReturnDateFlight.setText(date)
-
-                        Log.d("Dateee", date)
+                        if (dayOfMonth in 1..9 && monthOfYear in 0..9) {
+                            etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (dayOfMonth in 1..9) {
+                            etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (monthOfYear in 1..9) {
+                            etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
+                        } else {
+                            etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
+                        }
                     },
                     year,
                     month,
