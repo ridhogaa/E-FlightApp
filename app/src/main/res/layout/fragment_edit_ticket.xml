@@ -76,10 +76,10 @@
                     android:id="@+id/et_name_flight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Airplane Name"
                     android:cursorVisible="false"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="Flight Name"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>

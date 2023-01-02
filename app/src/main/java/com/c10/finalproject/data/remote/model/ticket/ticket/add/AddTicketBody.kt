@@ -3,6 +3,8 @@ package com.c10.finalproject.data.remote.tickets.model.ticket.add
 import com.google.gson.annotations.SerializedName
 
 data class AddTicketBody(
+    @SerializedName("airplane_name")
+    val airplaneName: String?,
     @SerializedName("departure_time")
     val departureTime: String?,
     @SerializedName("arrival_time")

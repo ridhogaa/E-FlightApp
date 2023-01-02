@@ -92,6 +92,28 @@
                 app:strokeColor="@color/black" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_airplane_name"
+                style="@style/CustomTextInputLayout"
+                app:startIconDrawable="@drawable/ic_fligt_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_one_way">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_airplane_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Airplane Name"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_from"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
@@ -106,7 +128,7 @@
                 app:boxCornerRadiusTopStart="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_one_way"
+                app:layout_constraintTop_toBottomOf="@+id/til_airplane_name"
                 app:startIconContentDescription="from"
                 app:startIconDrawable="@drawable/ic_baseline_flight_takeoff_24">
 
