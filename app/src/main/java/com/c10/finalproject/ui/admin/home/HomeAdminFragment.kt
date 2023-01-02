@@ -41,7 +41,7 @@ class HomeAdminFragment : Fragment() {
                     binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    setLoadingState(true)
+                    setLoadingState(false)
                     binding.constraintLayoutHomeAdmin.isVisible = false
                     binding.stateError.isVisible = true
                 }
@@ -52,7 +52,7 @@ class HomeAdminFragment : Fragment() {
                     setHomeRecyclerView(it.payload)
                 }
                 else -> {
-                    setLoadingState(true)
+                    setLoadingState(false)
                 }
             }
         }

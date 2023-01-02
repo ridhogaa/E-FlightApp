@@ -29,7 +29,9 @@ class HomeAdminViewModel @Inject constructor(private val ticketRepository: Ticke
 
             if (ticket.payload != null) {
                 viewModelScope.launch(Dispatchers.Main) {
-                    _homeAdminTicket.postValue(Resource.Success(ticket.payload))
+
+                    val ticketShowed = ticketRepository.getTickets().payload
+                    _homeAdminTicket.postValue(Resource.Success(ticketShowed!!.sortedBy { it.id }))
                 }
             } else {
                 _homeAdminTicket.postValue(Resource.Error(ticket.exception, null))
