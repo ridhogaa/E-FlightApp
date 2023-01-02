@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.c10.finalproject.R
 import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.databinding.FragmentHomeAdminBinding
 import com.c10.finalproject.wrapper.Resource
@@ -39,12 +37,18 @@ class HomeAdminFragment : Fragment() {
             when (it) {
                 is Resource.Loading -> {
                     setLoadingState(true)
+                    binding.constraintLayoutHomeAdmin.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
                     setLoadingState(true)
+                    binding.constraintLayoutHomeAdmin.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
                     setLoadingState(false)
+                    binding.stateError.isVisible = false
+                    binding.constraintLayoutHomeAdmin.isVisible = true
                     setHomeRecyclerView(it.payload)
                 }
                 else -> {

@@ -23,11 +23,23 @@ class HomeAdminViewModel @Inject constructor(private val ticketRepository: Ticke
 
     fun getHomeAdminTicket() = viewModelScope.launch(Dispatchers.IO) {
         _homeAdminTicket.postValue(Resource.Loading())
-        val ticket = ticketRepository.getTickets().payload
 
-        viewModelScope.launch(Dispatchers.Main) {
-            _homeAdminTicket.postValue(Resource.Success(ticket!!.sortedBy { it.id }))
+        try {
+            val ticket = ticketRepository.getTickets()
+
+            if (ticket.payload != null) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    _homeAdminTicket.postValue(Resource.Success(ticket.payload))
+                }
+            } else {
+                _homeAdminTicket.postValue(Resource.Error(ticket.exception, null))
+            }
+        } catch (e: Exception) {
+            viewModelScope.launch(Dispatchers.Main) {
+                _homeAdminTicket.postValue(Resource.Error(e, null))
+            }
         }
+
     }
 
 }
