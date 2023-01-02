@@ -230,12 +230,19 @@ class FlightAdminFragment : Fragment() {
         viewModel.ticket.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
+                    setLoadingState(true)
+                    binding.constraintLayoutFlightAdmin.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
+                    setLoadingState(false)
+                    binding.constraintLayoutFlightAdmin.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
-
                     setLoadingState(false)
+                    binding.stateError.isVisible = false
+                    binding.constraintLayoutFlightAdmin.isVisible = true
 
                     val adapter = ArrayAdapter(requireContext(), R.layout.list_textview, it.data)
                     (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)

@@ -33,13 +33,29 @@ class FlightAdminViewModel @Inject constructor(
 
     fun getTickets() = viewModelScope.launch(Dispatchers.IO) {
         _ticket.postValue(Resource.Loading())
-        val ticket = ticketRepository.getTickets()
-        val ticketList = mutableListOf<String>()
-        ticket.payload?.forEach {
-            ticketList.add(it.origin.toString())
+
+        try {
+
+            val ticket = ticketRepository.getTickets()
+            val ticketList = mutableListOf<String>()
+
+            if (ticket.payload != null) {
+                ticket.payload.forEach {
+                    ticketList.add(it.origin.toString())
+                }
+
+                viewModelScope.launch(Dispatchers.Main) {
+                    _ticket.postValue(Resource.Success(ticketList.distinct()))
+                }
+
+            } else {
+                _ticket.postValue(Resource.Error(ticket.exception, null))
+            }
+        } catch (e: Exception) {
+            viewModelScope.launch(Dispatchers.Main) {
+                _ticket.postValue(Resource.Error(e, null))
+            }
         }
-        viewModelScope.launch(Dispatchers.Main) {
-            _ticket.postValue(Resource.Success(ticketList.distinct()))
-        }
+
     }
 }

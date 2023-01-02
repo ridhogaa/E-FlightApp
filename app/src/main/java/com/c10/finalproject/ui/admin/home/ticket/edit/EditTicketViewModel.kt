@@ -25,30 +25,57 @@ class EditTicketViewModel @Inject constructor(
     private val _ticket = MutableLiveData<Resource<List<String>>>()
     val ticket: LiveData<Resource<List<String>>> get() = _ticket
 
+
      fun getTickets() = viewModelScope.launch(Dispatchers.IO) {
         _ticket.postValue(Resource.Loading())
-        val ticket = ticketRepository.getTickets()
-        val ticketList = mutableListOf<String>()
 
-        ticket.payload?.forEach {
-            ticketList.add(it.origin.toString())
-        }
+         try {
+             val ticket = ticketRepository.getTickets()
+             val ticketList = mutableListOf<String>()
 
-        viewModelScope.launch(Dispatchers.Main) {
-            _ticket.postValue(Resource.Success(ticketList.distinct()))
+             if (ticket.payload != null) {
+                 ticket.payload?.forEach {
+                     ticketList.add(it.origin.toString())
+                 }
 
-        }
+                 viewModelScope.launch(Dispatchers.Main) {
+                     _ticket.postValue(Resource.Success(ticketList.distinct()))
+                 }
+
+             } else {
+                 _ticket.postValue(Resource.Error(ticket.exception, null))
+             }
+         } catch (e: Exception) {
+             viewModelScope.launch(Dispatchers.Main) {
+                 _ticket.postValue(Resource.Error(e, null))
+             }
+         }
+
+
     }
 
     fun getToken() = dataStoreManager.getToken.asLiveData()
 
     fun getDetail(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = ticketRepository.getTicketById(id)
-            viewModelScope.launch(Dispatchers.Main) {
-                _detailResult.postValue(data)
+            try {
+                val data = ticketRepository.getTicketById(id)
+
+                if (data.payload != null) {
+                    viewModelScope.launch(Dispatchers.Main) {
+                        _detailResult.postValue(data)
+                    }
+
+                } else {
+                    _detailResult.postValue(Resource.Error(data.exception, null))
+                }
+            } catch (e: Exception) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    _detailResult.postValue(Resource.Error(e, null))
+                }
             }
         }
+
     }
 
     suspend fun updateTicket(token: String, id: Int, updateTicketBody: UpdateTicketBody) =

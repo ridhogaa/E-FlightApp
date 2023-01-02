@@ -287,12 +287,19 @@ class EditTicketFragment : Fragment() {
             when (it) {
                 is Resource.Loading -> {
                     setLoadingState(true)
-
+                    binding.constraintLayoutEditAdmin.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    setLoadingState(true)
+                    setLoadingState(false)
+                    binding.constraintLayoutEditAdmin.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
+                    setLoadingState(false)
+                    binding.stateError.isVisible = false
+                    binding.constraintLayoutEditAdmin.isVisible = true
+
                     val adapter = ArrayAdapter(requireContext(), R.layout.list_textview, it.data)
                     (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)
                     (binding.etTo as? AutoCompleteTextView)?.setAdapter(adapter)
@@ -310,14 +317,19 @@ class EditTicketFragment : Fragment() {
             when (it) {
                 is Resource.Loading -> {
                     setLoadingState(true)
-
+                    binding.constraintLayoutEditAdmin.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
-                    setLoadingState(true)
+                    setLoadingState(false)
+                    binding.constraintLayoutEditAdmin.isVisible = false
+                    binding.stateError.isVisible = true
 
                 }
                 is Resource.Success -> {
                     setLoadingState(false)
+                    binding.stateError.isVisible = false
+                    binding.constraintLayoutEditAdmin.isVisible = true
                     setView(it.payload)
                 }
                 else -> {}
