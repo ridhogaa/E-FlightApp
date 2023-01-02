@@ -36,7 +36,7 @@ class HomeAdminViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.Main) {
 
                     val ticketShowed = ticketRepository.getTickets().payload
-                    _homeAdminTicket.postValue(Resource.Success(ticketShowed!!.sortedBy { it.id }))
+                    _homeAdminTicket.postValue(Resource.Success(ticketShowed!!.sortedByDescending { it.id }))
                 }
             } else {
                 _homeAdminTicket.postValue(Resource.Error(ticket.exception, null))

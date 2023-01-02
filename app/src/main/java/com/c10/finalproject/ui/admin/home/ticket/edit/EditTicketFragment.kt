@@ -274,10 +274,11 @@ class EditTicketFragment : Fragment() {
 
         }
 
-        binding.btnCrashlytics.setOnClickListener {
-            throw RuntimeException("Test Crash") // Force a crash
-
-        }
+        binding.btnCrashlytics.visibility = View.GONE
+//        binding.btnCrashlytics.setOnClickListener {
+//            throw RuntimeException("Test Crash") // Force a crash
+//
+//        }
     }
 
 
