@@ -336,7 +336,7 @@ class FlightAdminFragment : Fragment() {
                             etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
@@ -367,7 +367,7 @@ class FlightAdminFragment : Fragment() {
                             etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")

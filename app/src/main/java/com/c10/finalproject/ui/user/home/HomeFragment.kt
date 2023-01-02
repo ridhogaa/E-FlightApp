@@ -211,7 +211,7 @@ class HomeFragment : Fragment() {
                             etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
@@ -242,7 +242,7 @@ class HomeFragment : Fragment() {
                             etReturnDate.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etReturnDate.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etReturnDate.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etReturnDate.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
