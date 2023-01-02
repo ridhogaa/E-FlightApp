@@ -10,4 +10,5 @@
     <color name="blue">#4600FF</color>
     <color name="main_blue">#0066FF</color>
     <color name="secondary_color_text">#555555</color>
+    <color name="red">#FF0000</color>
 </resources>

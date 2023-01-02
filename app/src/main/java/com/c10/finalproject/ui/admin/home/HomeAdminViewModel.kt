@@ -4,17 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.c10.finalproject.data.local.datastore.DataStoreManager
 import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.data.repository.TicketRepository
 import com.c10.finalproject.wrapper.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeAdminViewModel @Inject constructor(private val ticketRepository: TicketRepository) :
+class HomeAdminViewModel @Inject constructor(
+    private val ticketRepository: TicketRepository,
+    private val dataStoreManager: DataStoreManager,
+) :
     ViewModel() {
     // TODO: Implement the ViewModel
 
@@ -43,5 +48,10 @@ class HomeAdminViewModel @Inject constructor(private val ticketRepository: Ticke
         }
 
     }
+
+    fun clear() = CoroutineScope(Dispatchers.IO).launch {
+        dataStoreManager.clear()
+    }
+
 
 }

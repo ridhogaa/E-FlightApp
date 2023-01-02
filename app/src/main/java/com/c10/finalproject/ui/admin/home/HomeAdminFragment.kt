@@ -1,5 +1,6 @@
 package com.c10.finalproject.ui.admin.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.databinding.FragmentHomeAdminBinding
+import com.c10.finalproject.ui.MainActivity
 import com.c10.finalproject.wrapper.Resource
 
 class HomeAdminFragment : Fragment() {
@@ -29,6 +31,9 @@ class HomeAdminFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+
+        btnListener()
+
     }
 
     private fun observeData() {
@@ -58,6 +63,17 @@ class HomeAdminFragment : Fragment() {
         }
     }
 
+    private fun btnListener(){
+        binding.btnLogoutAdmin.setOnClickListener {
+            logoutAdmin()
+        }
+    }
+
+    private fun logoutAdmin() {
+        viewModel.clear()
+        startActivity(Intent(requireContext(), MainActivity::class.java))
+        activity?.finish()
+    }
     private fun setHomeRecyclerView(ticket: List<Data>?) {
         val adapter = HomeAdminAdapter()
         adapter.submitList(ticket)
@@ -67,7 +83,6 @@ class HomeAdminFragment : Fragment() {
             rvListFlight.adapter = adapter
         }
     }
-
     private fun setLoadingState(isLoading: Boolean) {
         binding.pbHomeAdminList.isVisible = isLoading
         binding.rvListFlight.isVisible = !isLoading
