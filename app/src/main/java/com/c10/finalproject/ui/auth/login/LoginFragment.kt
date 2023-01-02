@@ -11,13 +11,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.auth.model.LoginBody
+import com.c10.finalproject.data.remote.model.auth.LoginBody
 import com.c10.finalproject.databinding.FragmentLoginBinding
 import com.c10.finalproject.ui.UserActivity
 import com.c10.finalproject.ui.AdminActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -40,7 +39,6 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         login()
         dontHaveAccount()
-//        isLogin()
     }
 
     private fun login() {
@@ -54,6 +52,7 @@ class LoginFragment : Fragment() {
                     viewModel.login(LoginBody(email, password)).collect() {
                         it.onSuccess { response ->
                             viewModel.setToken(response.accessToken.toString())
+                            viewModel.setId(response.id!!)
                             if (response.role.equals("admin", ignoreCase = true)) {
                                 Toast.makeText(
                                     requireContext(),
@@ -61,7 +60,7 @@ class LoginFragment : Fragment() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 startActivity(Intent(requireContext(), AdminActivity::class.java))
-                                //activity?.finish()
+                                activity?.finish()
                             } else {
                                 Toast.makeText(
                                     requireContext(),
@@ -69,7 +68,7 @@ class LoginFragment : Fragment() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 startActivity(Intent(requireContext(), UserActivity::class.java))
-                                //activity?.finish()
+                                activity?.finish()
                             }
                         }
                         it.onFailure { responseFailure ->
@@ -88,36 +87,6 @@ class LoginFragment : Fragment() {
             }
         }
     }
-
-//    private fun isLogin() {
-//        viewModel.getToken().observe(viewLifecycleOwner) {
-//            if (it.isNotEmpty()) {
-//                if (it.equals(TOKEN_ADMIN, true)) {
-//                    navigateToHomeAdmin()
-//                } else {
-//                    navigateToHomeUser()
-//                }
-//            } else {
-//
-//            }
-//        }
-//    }
-
-//    private fun navigateToHomeAdmin() {
-//        val intent = Intent(requireContext(), AdminActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-//        }
-//        startActivity(intent)
-//        activity?.finish()
-//    }
-//
-//    private fun navigateToHomeUser() {
-//        val intent = Intent(requireContext(), UserActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-//        }
-//        startActivity(intent)
-//        activity?.finish()
-//    }
 
     private fun dontHaveAccount() {
         binding.tvSignupHere.setOnClickListener {

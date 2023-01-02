@@ -18,11 +18,21 @@ abstract class RepositoryModule {
     abstract fun bindsAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
 
     @Binds
-    abstract fun bindsUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRespository
+    abstract fun bindsUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 
     @Binds
     abstract fun bindsTicketRepository(ticketRepositoryImpl: TicketRepositoryImpl): TicketRepository
 
     @Binds
     abstract fun bindsOrderRepository(orderRepositoryImpl: OrderRepositoryImpl): OrderRepository
+
+    @Binds
+    abstract fun bindsHistoriesRepository(historiesRepositoryImpl: HistoriesRepositoryImpl): HistoriesRepository
+
+
+    @Binds
+    abstract fun bindsNotificationRepository(notificationRepository: NotificationRepositoryImpl): NotificationRepository
+
+    @Binds
+    abstract fun bindsWishlistRepository(wishlistRepository: WishlistRepositoryImpl): WishlistRepository
 }

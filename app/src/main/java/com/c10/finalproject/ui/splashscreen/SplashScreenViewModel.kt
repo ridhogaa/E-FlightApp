@@ -18,4 +18,5 @@ class SplashScreenViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
     fun getToken(): LiveData<String> = dataStoreManager.getToken.asLiveData()
+    fun getId() = dataStoreManager.getId.asLiveData()
 }

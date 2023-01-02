@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.c10.finalproject.data.remote.tickets.model.Data
+import com.c10.finalproject.data.remote.model.ticket.Data
 import com.c10.finalproject.data.repository.TicketRepository
 import com.c10.finalproject.wrapper.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,16 +37,15 @@ class SearchResultViewModel @Inject constructor(private val ticketRepository: Ti
                 && it.departureTime?.substring(0, 10).equals(departureDate)
                 && it.returnTime?.substring(0, 10).equals(returnDate)
             ) {
-                ticketList.clear()
                 ticketList.add(it)
-            } else {
-                _searchResult.postValue(Resource.Empty())
             }
         }
         if (ticketList.size > 0) {
             viewModelScope.launch(Dispatchers.Main) {
                 _searchResult.postValue(Resource.Success(ticketList))
             }
+        } else {
+            _searchResult.postValue(Resource.Empty())
         }
     }
 }

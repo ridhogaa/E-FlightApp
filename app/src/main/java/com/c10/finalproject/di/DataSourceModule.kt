@@ -1,9 +1,9 @@
 package com.c10.finalproject.di
 
-import com.c10.finalproject.data.remote.tickets.datasource.OrderRemoteDataSource
-import com.c10.finalproject.data.remote.tickets.datasource.OrderRemoteDataSourceImpl
-import com.c10.finalproject.data.remote.tickets.datasource.TicketRemoteDataSource
-import com.c10.finalproject.data.remote.tickets.datasource.TicketRemoteDataSourceImpl
+import com.c10.finalproject.data.local.datasource.WishlistLocalDataSource
+import com.c10.finalproject.data.local.datasource.WishlistLocalDataSourceImpl
+import com.c10.finalproject.data.remote.datasource.*
+import com.c10.finalproject.data.remote.tickets.datasource.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,4 +23,17 @@ abstract class DataSourceModule {
 
     @Binds
     abstract fun provideOrderDataSource(orderRemoteDataSource: OrderRemoteDataSourceImpl): OrderRemoteDataSource
+
+    @Binds
+    abstract fun provideUserDataSource(userRemoteDataSource: UserRemoteDataSourceImpl): UserRemoteDataSource
+
+    @Binds
+    abstract fun provideNotificationDataSource(notificationRemoteDataSource: NotificationRemoteDataSourceImpl): NotificationRemoteDataSource
+
+    @Binds
+    abstract fun provideWishlistLocalDataSource(wishlistLocalDataSource: WishlistLocalDataSourceImpl): WishlistLocalDataSource
+
+    @Binds
+    abstract fun provideHistoriesDataSource(historiesRemoteDataSource: HistoriesRemoteDataSourceImpl): HistoriesRemoteDataSource
+
 }

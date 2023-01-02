@@ -3,9 +3,9 @@ package com.c10.finalproject.ui.user.home
 import android.app.DatePickerDialog
 import android.content.res.ColorStateList
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,24 +14,14 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.tickets.model.Data
 import com.c10.finalproject.databinding.FragmentHomeBinding
-import com.c10.finalproject.ui.user.search.SearchAdapter
 import com.c10.finalproject.wrapper.Resource
-import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.forEach
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -52,9 +42,10 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeTicket()
+        viewModel.getToken().observe(viewLifecycleOwner) {
+            viewModel.getUserByToken(it)
+        }
         chooseCategory = "one_way"
-        swapOnClick()
         departureDate()
         returnDate()
         chooseDeparture()
@@ -62,65 +53,91 @@ class HomeFragment : Fragment() {
         buttonSearchOnClick()
     }
 
-    private fun observeTicket() {
+    private fun isImageEmpty(urlImage: String) {
+        if (urlImage.isNotEmpty()) {
+            Glide.with(requireContext()).load(urlImage).into(binding.imageProfile)
+        } else {
+            binding.imageProfile.background =
+                resources.getDrawable(R.drawable.ic_photo_profile)
+        }
+    }
+
+    private fun observe() {
+        viewModel.getTickets()
+        viewModel.user.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                    binding.pbHome.isVisible = true
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = false
+                }
+                is Resource.Error -> {
+                    binding.pbHome.isVisible = false
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = true
+                }
+                is Resource.Success -> {
+                    binding.pbHome.isVisible = false
+                    binding.stateError.isVisible = false
+                    binding.constraintLayout.isVisible = true
+                    binding.apply {
+                        tvHello.text = "Hello, ${it.data.data?.name}"
+                        it.data.data?.photoProfile?.let { it1 -> isImageEmpty(it1) }
+                    }
+                }
+                else -> {
+
+                }
+            }
+        }
         viewModel.ticket.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
+                    binding.pbHome.isVisible = true
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = false
                 }
                 is Resource.Error -> {
+                    binding.pbHome.isVisible = false
+                    binding.constraintLayout.isVisible = false
+                    binding.stateError.isVisible = true
                 }
                 is Resource.Success -> {
+                    binding.pbHome.isVisible = false
+                    binding.stateError.isVisible = false
+                    binding.constraintLayout.isVisible = true
                     val adapter = ArrayAdapter(requireContext(), R.layout.list_textview, it.data)
+                    swapOnClick(adapter)
                     (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)
                     (binding.etTo as? AutoCompleteTextView)?.setAdapter(adapter)
                 }
                 else -> {
+
                 }
             }
         }
     }
 
-
-    private fun swapOnClick() {
+    private fun swapOnClick(adapter: ArrayAdapter<String>) {
         binding.swapFromTo.setOnClickListener {
             val from = binding.etFrom.text.toString().trim()
             val to = binding.etTo.text.toString().trim()
             binding.etTo.setText(from)
             binding.etFrom.setText(to)
-            binding.swapToFrom.visibility = View.VISIBLE
-            binding.swapFromTo.visibility = View.GONE
-
+            binding.swapToFrom.isVisible = true
+            binding.swapFromTo.isVisible = false
+            (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)
+            (binding.etTo as? AutoCompleteTextView)?.setAdapter(adapter)
         }
         binding.swapToFrom.setOnClickListener {
             val from = binding.etFrom.text.toString().trim()
             val to = binding.etTo.text.toString().trim()
             binding.etTo.setText(to)
             binding.etFrom.setText(from)
-            binding.swapFromTo.visibility = View.VISIBLE
-            binding.swapToFrom.visibility = View.GONE
-        }
-    }
-
-    private fun observe() {
-        viewModel.user.observe(viewLifecycleOwner) {
-            it.onSuccess { response ->
-                binding.apply {
-                    tvHello.text = "Hello, ${response.data?.name}"
-                    isImageEmpty(response.data?.photoProfile.toString())
-                }
-            }
-            it.onFailure {
-
-            }
-        }
-    }
-
-    private fun isImageEmpty(urlImage: String) {
-        if (urlImage.isNotEmpty()) {
-            Glide.with(requireContext()).load(urlImage).into(binding.imageProfile)
-        } else {
-            binding.imageProfile.background =
-                resources.getDrawable(R.drawable.ic_baseline_account_circle_24)
+            binding.swapToFrom.isVisible = false
+            binding.swapFromTo.isVisible = true
+            (binding.etFrom as? AutoCompleteTextView)?.setAdapter(adapter)
+            (binding.etTo as? AutoCompleteTextView)?.setAdapter(adapter)
         }
     }
 
@@ -141,8 +158,12 @@ class HomeFragment : Fragment() {
                         bundle.putString("RETURN", null)
                         it.findNavController()
                             .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
-                    } else if (chooseCategory.equals("round_trip", true) && returnDate.isNotEmpty()) {
-                        if (departureDate != returnDate){
+                    } else if (chooseCategory.equals(
+                            "round_trip",
+                            true
+                        ) && returnDate.isNotEmpty()
+                    ) {
+                        if (departureDate != returnDate) {
                             bundle.putString("CATEGORY", chooseCategory)
                             bundle.putString("FROM", from)
                             bundle.putString("TO", to)
@@ -151,10 +172,15 @@ class HomeFragment : Fragment() {
                             it.findNavController()
                                 .navigate(R.id.action_homeFragment_to_searchResultFragment, bundle)
                         } else {
-                            Toast.makeText(requireContext(), "Departure Date and Return Date must not match", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Departure Date and Return Date must not match",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
-                        Toast.makeText(requireContext(), "Field must not empty", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Field must not empty", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 } else {
                     Toast.makeText(
@@ -181,8 +207,15 @@ class HomeFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
-                        etDepartureDate.setText(date)
+                        if (dayOfMonth in 1..9 && monthOfYear in 0..9) {
+                            etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (dayOfMonth in 1..9) {
+                            etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (monthOfYear in 1..9) {
+                            etDepartureDate.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
+                        } else {
+                            etDepartureDate.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
+                        }
                     },
                     year,
                     month,
@@ -205,8 +238,15 @@ class HomeFragment : Fragment() {
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
                     { view, year, monthOfYear, dayOfMonth ->
-                        val date = "$year-" + (monthOfYear + 1) + "-$dayOfMonth"
-                        etReturnDate.setText(date)
+                        if (dayOfMonth in 1..9 && monthOfYear in 0..9) {
+                            etReturnDate.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (dayOfMonth in 1..9) {
+                            etReturnDate.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
+                        } else if (monthOfYear in 1..9) {
+                            etReturnDate.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
+                        } else {
+                            etReturnDate.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
+                        }
                     },
                     year,
                     month,

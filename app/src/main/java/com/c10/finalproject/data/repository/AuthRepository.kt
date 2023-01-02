@@ -1,13 +1,10 @@
 package com.c10.finalproject.data.repository
 
-import com.c10.finalproject.data.remote.auth.ApiServiceAuth
-import com.c10.finalproject.data.remote.auth.model.*
+import com.c10.finalproject.data.remote.service.ApiServiceAuth
+import com.c10.finalproject.data.remote.model.auth.*
 import com.google.gson.Gson
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import okhttp3.ResponseBody
 import javax.inject.Inject
 
 /**

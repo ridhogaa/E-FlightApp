@@ -38,13 +38,13 @@ class AdminActivity : AppCompatActivity() {
         bottomNav.setupWithNavController(navController)
         supportActionBar?.hide()
 
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.detailFragment -> hideBottomNav(true)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.editTicketAdminFragment -> hideBottomNav(true)
 //                R.id.updateProfileFragment -> hideBottomNav(true)
-//                else -> hideBottomNav(false)
-//            }
-//        }
+                else -> hideBottomNav(false)
+            }
+        }
     }
 
     private fun hideBottomNav(hide: Boolean) {

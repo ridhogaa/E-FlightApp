@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
     android:padding="8dp"
-    app:strokeWidth="1dp"
+    app:cardCornerRadius="16dp"
     app:strokeColor="@color/black"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="233dp"
+        android:layout_height="match_parent"
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
 
@@ -32,23 +32,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:fontFamily="@font/inter_medium"
-            android:text="IN-230"
+            android:text="Garuda Indonesia"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/success"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/inter_medium"
-            android:textColor="@color/secondary_color_text"
+            android:text="Success Booking"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="01 hr 00min" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView6"
@@ -92,9 +92,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/inter_medium"
-            android:text="JKT (Jakarta)"
+            android:text="Jakarta"
             android:textColor="@color/secondary_color_text"
-            android:textSize="10sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -104,9 +104,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/inter_medium"
-            android:text="JPN (Japan)"
+            android:text="Japan"
             android:textColor="@color/secondary_color_text"
-            android:textSize="10sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/inter_medium"
-            android:text="ECONOMY CLASS"
+            android:text="One Way"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -129,28 +129,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/inter_medium"
-            android:text="Rp. 3000.000.00"
+            android:text="Rp. 3.000.000"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sr_check"
-            style="@style/Button"
-            android:text="Check"
-            android:paddingHorizontal="50dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView11"
-            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,8 +14,8 @@ import javax.inject.Inject
 class BottomSheetTransactionViewModel @Inject constructor(
     private val orderRepository: OrderRepository,
     private val dataStoreManager: DataStoreManager
-) :
-    ViewModel() {
+) : ViewModel() {
+
     fun addOrder(token: String, id: Int) =
         viewModelScope.launch(Dispatchers.IO) { orderRepository.addOrder(token, id) }
 

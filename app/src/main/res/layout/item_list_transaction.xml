@@ -8,53 +8,11 @@
     android:padding="8dp"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            tools:src="@drawable/logo"/>
-
-        <TextView
-            android:id="@+id/tv_username_item_trans"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Username"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_medium"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="|"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_medium"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:id="@+id/tv_type_item_trans"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="One-Way"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_medium"
-            android:textSize="13sp"/>
-
-    </LinearLayout>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_item_trans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="16dp"
         app:strokeColor="@color/black"
         app:strokeWidth="1dp">
@@ -64,6 +22,19 @@
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
             android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/tv_type_item_trans"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="One-Way"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="13sp"/>
 
             <ImageView
                 android:id="@+id/imageView"
@@ -85,18 +56,6 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_time_item_trans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/inter_medium"
-                android:textColor="@color/secondary_color_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="01 hr 00min" />
 
             <TextView
                 android:id="@+id/tv_departure_time_item_trans"
@@ -151,22 +110,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_landing_time_item_trans" />
 
             <TextView
-                android:id="@+id/tv_class_item_trans"
-                style="@style/TextView16BlackMedium"
-                android:layout_marginTop="16dp"
-                android:text="ECONOMY CLASS"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-            <TextView
                 android:id="@+id/tv_total_item_trans"
                 style="@style/TextView16BlackMedium"
                 android:layout_marginTop="8dp"
                 android:text="Rp. 3000.000.00"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_class_item_trans" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <Button
                 android:id="@+id/btn_todetail_item_trans"

@@ -18,16 +18,26 @@ import kotlinx.coroutines.flow.map
 class DataStoreManager(@ApplicationContext private val context: Context) {
 
     val getToken: Flow<String> = context.dataStore.data.map {
-        it[TOKEN_USER_KEY]!!
+        it[TOKEN_USER_KEY] ?: ""
     }
 
     suspend fun setToken(token: String) {
         context.dataStore.edit {
-            it[TOKEN_USER_KEY] = token
+            it[TOKEN_USER_KEY] = "Bearer $token"
         }
     }
 
-    suspend fun clearToken() {
+    val getId: Flow<Int> = context.dataStore.data.map {
+        it[ID_USER_KEY] ?: 0
+    }
+
+    suspend fun setId(id: Int) {
+        context.dataStore.edit {
+            it[ID_USER_KEY] = id
+        }
+    }
+
+    suspend fun clear() {
         context.dataStore.edit {
             it.clear()
         }
@@ -36,6 +46,7 @@ class DataStoreManager(@ApplicationContext private val context: Context) {
     companion object {
         private const val DATASTORE_NAME = "datastore_preferences"
         private val TOKEN_USER_KEY = stringPreferencesKey("token_user_key")
+        private val ID_USER_KEY = intPreferencesKey("id_user_key")
         private val Context.dataStore by preferencesDataStore(
             name = DATASTORE_NAME
         )

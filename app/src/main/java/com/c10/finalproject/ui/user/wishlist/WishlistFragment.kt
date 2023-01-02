@@ -1,32 +1,76 @@
 package com.c10.finalproject.ui.user.wishlist
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.c10.finalproject.R
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.c10.finalproject.databinding.FragmentWishlistBinding
+import com.c10.finalproject.wrapper.Resource
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WishlistFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = WishlistFragment()
-    }
-
-    private lateinit var viewModel: WishlistViewModel
+    private val viewModel: WishlistViewModel by activityViewModels()
+    private var _binding: FragmentWishlistBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_wishlist, container, false)
+    ): View {
+        _binding = FragmentWishlistBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(WishlistViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getId().observe(viewLifecycleOwner) {
+            viewModel.getWishlist(it)
+        }
+        initList()
+        observeData()
     }
 
+    private fun initList() {
+        binding.apply {
+            rvWishlist.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun observeData() {
+        viewModel.wishlist.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                    binding.pbWishlistList.isVisible = true
+                    binding.rvWishlist.isVisible = false
+                    binding.emptyState.isVisible = false
+                }
+                is Resource.Error -> {
+                    binding.pbWishlistList.isVisible = true
+                    binding.rvWishlist.isVisible = false
+                    binding.emptyState.isVisible = false
+                }
+                is Resource.Success -> {
+                    binding.pbWishlistList.isVisible = false
+                    binding.rvWishlist.isVisible = true
+                    binding.emptyState.isVisible = false
+                    binding.rvWishlist.adapter = WishlistAdapter(it.data)
+                }
+                else -> {
+                    binding.pbWishlistList.isVisible = false
+                    binding.rvWishlist.isVisible = false
+                    binding.emptyState.isVisible = true
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

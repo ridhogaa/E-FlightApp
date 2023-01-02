@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card"
+    android:id="@+id/cvTicketHomeAdmin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -70,7 +70,7 @@
             tools:text="15.30" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/iv_plane"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -103,31 +103,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_landing_time_item_home" />
 
-        <TextView
-            android:id="@+id/tv_class_item_home"
-            style="@style/TextView16BlackMedium"
-            android:layout_marginTop="16dp"
-            android:text="ECONOMY CLASS"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <TextView
             android:id="@+id/tv_price_item_home"
             style="@style/TextView16BlackMedium"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="Rp. 3000.000.00"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_class_item_home" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_plane" />
 
         <TextView
             android:id="@+id/tv_type_item_home"
             style="@style/TextView16BlackMedium"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="One-Way"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_plane" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

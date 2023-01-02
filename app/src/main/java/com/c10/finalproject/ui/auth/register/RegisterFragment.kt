@@ -1,6 +1,5 @@
 package com.c10.finalproject.ui.auth.register
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.c10.finalproject.R
-import com.c10.finalproject.data.remote.auth.model.RegisterBody
+import com.c10.finalproject.data.remote.model.auth.RegisterBody
 import com.c10.finalproject.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job

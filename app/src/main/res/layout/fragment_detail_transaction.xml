@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card"
@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:padding="8dp"
-    tools:context=".ui.admin.detailtransaction.DetailTransactionFragment"
+    tools:context=".ui.admin.transaction.detailtransaction.DetailTransactionFragment"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -25,68 +25,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/TextView16BlackMedium"
-            android:text="Flight Details"
+            android:text="Detail Transaction"
             android:textAlignment="center"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="16dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            tools:src="@drawable/logo"/>
-
-        <TextView
-            android:id="@+id/tv_username_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Username"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_medium"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="|"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_medium"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:id="@+id/tv_type_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="One-Way"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter_medium"
-            android:textSize="13sp"/>
-
-    </LinearLayout>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
+        android:layout_marginTop="8dp"
         app:strokeColor="@color/black"
-        app:strokeWidth="1dp">
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
             android:paddingBottom="8dp">
+
+
+            <TextView
+                android:id="@+id/tv_type_item_trans"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="One-Way"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="13sp"/>
 
             <ImageView
                 android:id="@+id/imageView"
@@ -109,17 +84,6 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_time_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/inter_medium"
-                android:textColor="@color/secondary_color_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="01 hr 00min" />
 
             <TextView
                 android:id="@+id/tv_departure_detail"
@@ -127,7 +91,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="14dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/tv_total_detail"
                 tools:text="14.30" />
 
             <TextView
@@ -136,7 +100,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/tv_total_detail"
                 tools:text="15.30" />
 
             <ImageView
@@ -146,7 +110,7 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_fligt_code_detail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_total_detail"
                 app:srcCompat="@drawable/item_flight_img" />
 
             <TextView
@@ -187,65 +151,123 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_email"
+                    android:id="@+id/et_departure_date_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Departure Date"
+                    android:cursorVisible="false"
+                    android:editable="false"
+                    android:focusable="false"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView13"
-                style="@style/TextView16BlackMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Total Passenger"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/tv_departure2_detail"
+                style="@style/TextView16BlackSemiBold"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_departure_date_detail" />
+                app:layout_constraintTop_toBottomOf="@+id/til_departure_date_detail"
+                tools:text="14.30" />
 
             <TextView
-                android:id="@+id/tv_total_passenger_detail"
+                android:id="@+id/tv_landing2_detail"
+                style="@style/TextView16BlackSemiBold"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_departure_date_detail"
+                tools:text="15.30" />
+
+            <ImageView
+                android:id="@+id/imageView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_departure_date_detail"
+                app:srcCompat="@drawable/item_flight_img" />
+
+            <TextView
+                android:id="@+id/tv_from2_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/inter_medium"
-                android:text="1"
-                android:textColor="@color/black"
-                android:textSize="64sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="JKT (Jakarta)"
+                android:textColor="@color/secondary_color_text"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_departure2_detail" />
 
             <TextView
-                android:id="@+id/tv_class_detail"
-                style="@style/TextView16BlackMedium"
+                android:id="@+id/tv_to2_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Economy Class"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="JPN (Japan)"
+                android:textColor="@color/secondary_color_text"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_departure2_detail" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_return_date_detail"
+                style="@style/CustomTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:startIconDrawable="@drawable/ic_landing"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_total_passenger_detail" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_to2_detail">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_return_date_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Return Date"
+                    android:cursorVisible="false"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <TextView
                 android:id="@+id/tv_total_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Rp 3.000.000,00"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_class_detail" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_fligt_code_detail" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </com.google.android.material.card.MaterialCardView>
 
-</LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_detail_transaction_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
