@@ -82,6 +82,8 @@ class FlightAdminFragment : Fragment() {
 
             if (validationInput()) {
 
+                val airplaneName = binding.etAirplaneName.text.toString().trim()
+
                 val originPlace = binding.etFrom.text.toString().trim()
                 val directionPlace = binding.etTo.text.toString().trim()
 
@@ -129,6 +131,7 @@ class FlightAdminFragment : Fragment() {
                                     job = launch {
                                         viewModel.addTicket(
                                             it, AddTicketBody(
+                                                airplaneName = airplaneName,
                                                 departureTime = "${departure_time}",
                                                 arrivalTime = "${arrival_time}",
                                                 returnTime = null,
@@ -168,6 +171,7 @@ class FlightAdminFragment : Fragment() {
                                     job = launch {
                                         viewModel.addTicket(
                                             it, AddTicketBody(
+                                                airplaneName = airplaneName,
                                                 departureTime = "${departure_time}",
                                                 arrivalTime = "${arrival_time}",
                                                 returnTime = "${return_time}",
@@ -332,7 +336,7 @@ class FlightAdminFragment : Fragment() {
                             etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
@@ -363,7 +367,7 @@ class FlightAdminFragment : Fragment() {
                             etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
@@ -381,6 +385,9 @@ class FlightAdminFragment : Fragment() {
     private fun validationInput(): Boolean {
 
         var isValid = true
+
+        val airplaneName = binding.etAirplaneName.toString().trim()
+
         val originPlace = binding.etFrom.text.toString().trim()
         val directionPlace = binding.etTo.text.toString().trim()
 
@@ -394,6 +401,13 @@ class FlightAdminFragment : Fragment() {
         val landingTime2 = binding.etTimeLanding2Flight.text.toString().trim()
 
         val price = binding.etPriceFlight.text.toString().trim()
+
+
+        if (airplaneName.isEmpty()) {
+            isValid = false
+            binding.tilAirplaneName.error = "This field must not be empty!"
+            binding.tilAirplaneName.requestFocus()
+        }
 
         if (originPlace.isEmpty()) {
             isValid = false

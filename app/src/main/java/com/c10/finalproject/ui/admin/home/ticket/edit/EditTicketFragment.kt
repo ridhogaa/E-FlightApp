@@ -80,6 +80,8 @@ class EditTicketFragment : Fragment() {
 
             if (validationInput()) {
 
+                val airplaneName = binding.etNameFlight.text.toString().trim()
+
                 val originPlace = binding.etFrom.text.toString().trim()
                 val directionPlace = binding.etTo.text.toString().trim()
 
@@ -130,6 +132,7 @@ class EditTicketFragment : Fragment() {
                                             it,
                                             arguments?.getInt("ID_TICKET")!!,
                                             UpdateTicketBody(
+                                                airplaneName = airplaneName,
                                                 departureTime = "${departure_time}",
                                                 arrivalTime = "${arrival_time}",
                                                 returnTime = null,
@@ -171,6 +174,7 @@ class EditTicketFragment : Fragment() {
                                             it,
                                             arguments?.getInt("ID_TICKET")!!,
                                             UpdateTicketBody(
+                                                airplaneName = airplaneName,
                                                 departureTime = "${departure_time}",
                                                 arrivalTime = "${arrival_time}",
                                                 returnTime = "${return_time}",
@@ -379,7 +383,7 @@ class EditTicketFragment : Fragment() {
                             etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etDepartureDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etDepartureDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
@@ -406,7 +410,7 @@ class EditTicketFragment : Fragment() {
                             etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-0$dayOfMonth")
                         } else if (dayOfMonth in 1..9) {
                             etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-0$dayOfMonth")
-                        } else if (monthOfYear in 1..9) {
+                        } else if (monthOfYear in 0..9) {
                             etReturnDateFlight.setText("$year-0" + (monthOfYear + 1) + "-$dayOfMonth")
                         } else {
                             etReturnDateFlight.setText("$year-" + (monthOfYear + 1) + "-$dayOfMonth")
@@ -452,6 +456,9 @@ class EditTicketFragment : Fragment() {
     private fun validationInput(): Boolean {
 
         var isValid = true
+
+        val airplaneName = binding.etNameFlight.toString().trim()
+
         val originPlace = binding.etFrom.text.toString().trim()
         val directionPlace = binding.etTo.text.toString().trim()
 
@@ -465,6 +472,13 @@ class EditTicketFragment : Fragment() {
         val landingTime2 = binding.etTimeLanding2Flight.text.toString().trim()
 
         val price = binding.etPriceFlight.text.toString().trim()
+
+
+        if (airplaneName.isEmpty()) {
+            isValid = false
+            binding.tilNameFlight.error = "This field must not be empty!"
+            binding.tilNameFlight.requestFocus()
+        }
 
         if (originPlace.isEmpty()) {
             isValid = false
