@@ -273,6 +273,11 @@ class EditTicketFragment : Fragment() {
             builder.show()
 
         }
+
+        binding.btnCrashlytics.setOnClickListener {
+            throw RuntimeException("Test Crash") // Force a crash
+
+        }
     }
 
 
